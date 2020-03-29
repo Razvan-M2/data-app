@@ -13,7 +13,7 @@ app.get('/', (req,res) => {
 });
 
 app.get('/main2', (req,res) => {
-    results = dataGoogle.getTrends({keyword: 'Coronavirus',startTime: new Date(Date.now() - (48 * 60 * 60 * 1000)),geo:'RO'},res)
+    results = dataGoogle.getTrends({keyword: 'Coronavirus',startTime: new Date(Date.now() - (24 * 5 * 60 * 60 * 1000)),geo:'US'},res)
 
 });
 
