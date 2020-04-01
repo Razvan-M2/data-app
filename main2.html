@@ -39,6 +39,10 @@
 });
     
 function addData(data) {
+
+    while(dataPoints.length > 0) {
+        dataPoints.pop();
+    }
     
     for (var i = 0; i < data.length; i++) {
         dataPoints.push({
