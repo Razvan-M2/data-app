@@ -1,10 +1,70 @@
-<html lang="en">
+<!DOCTYPE HTML>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
 </head>
 <body>
-    <h1 style="color:red;" >Hello, welcome to our frequency!</h1>
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<label for="cars">Choose a country:</label>
+
+<select id="countries" onchange="getData(document.getElementById('countries').value)">
+  <option value="Romania">Romania</option>
+  <option value="France">France</option>
+  <option value="USA">USA</option>
+</select>
+<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="scripts/jquery-3.4.1.min.js"></script>
+<script>
+    
+    var dataPoints = [];
+    var chart ;
+    
+    $(document).ready(function(){
+        chart = new CanvasJS.Chart("chartContainer", {
+        animationEnabled: true,
+        theme: "light2",
+        title: {
+            text: "Daily Sales Data"
+        },
+        axisY: {
+            title: "Trending",
+            titleFontSize: 12
+        },
+        data: [{
+            type: "column",
+            dataPoints: dataPoints
+        }]
+    });
+});
+    
+function addData(data) {
+    
+    for (var i = 0; i < data.length; i++) {
+        dataPoints.push({
+            label: data[i].geoName,
+            y: data[i].value[0]
+        });
+    }
+    chart.render();
+
+}
+
+function getData(country){
+    console.log(country);
+    $.ajax({
+        url: "/trends/"+country,
+        type:"get",
+        dataType: "json",
+        success: function(data){
+            addData(data);
+        }
+    });
+}
+
+    </script>
+
+
+
 </body>
 </html>

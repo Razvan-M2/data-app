@@ -9,7 +9,8 @@ module.exports = {
             if(err) console.error('there was an error!', err);
             else{ 
                 var obj = JSON.parse(results);
-                console.log(beautify(obj.default.geoMapData,null,2,100));
+                //console.log(beautify(obj.default.geoMapData,null,2,100));
+                //console.log(obj);
                 res.send(beautify(obj.default.geoMapData,null,2,100));
             };
         })
