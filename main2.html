@@ -12,6 +12,7 @@
   <option value="France">France</option>
   <option value="USA">USA</option>
 </select>
+
 <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script src="scripts/jquery-3.4.1.min.js"></script>
@@ -20,8 +21,18 @@
     var dataPoints = [];
     var chart ;
     
-    $(document).ready(function(){
-        chart = new CanvasJS.Chart("chartContainer", {
+$(document).ready(function(){
+        
+
+});
+    
+function addData() {
+
+    while(dataPoints.length > 0) {
+        dataPoints.pop();
+    }
+
+    chart = new CanvasJS.Chart("chartContainer", {
         animationEnabled: true,
         theme: "light2",
         title: {
@@ -36,37 +47,34 @@
             dataPoints: dataPoints
         }]
     });
-});
     
-function addData(data) {
-
-    while(dataPoints.length > 0) {
-        dataPoints.pop();
-    }
-    
-    for (var i = 0; i < data.length; i++) {
+    for (var i = 0; i < arguments[0].length; i++) {
         dataPoints.push({
-            label: data[i].geoName,
-            y: data[i].value[0]
+            label: arguments[0][i].geoName,
+            y: arguments[0][i].value[0],
         });
+        // dataPoints = [...dataPoints,{ label: data[i].geoName, y: data[i].value[0]}];
+    
     }
     chart.render();
 
 }
 
 function getData(country){
-    console.log(country);
+    //console.log(country);
+
     $.ajax({
         url: "/trends/"+country,
         type:"get",
         dataType: "json",
         success: function(data){
+            //console.log(data);
             addData(data);
         }
     });
 }
 
-    </script>
+</script>
 
 
 
