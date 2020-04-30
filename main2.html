@@ -4,7 +4,7 @@
 
 </head>
 <body>
-<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<div id="chartContainer" style="height: 370px; width: 70%;"></div>
 <label for="cars">Choose a country:</label>
 
 <select id="countries" onchange="getData(document.getElementById('countries').value)">
@@ -22,10 +22,7 @@
     var chart ;
     
 $(document).ready(function(){
-        
-});
-    
-function addData() {
+        function addData() {
 
     while(dataPoints.length > 0) {
         dataPoints.pop();
@@ -46,33 +43,19 @@ function addData() {
             dataPoints: dataPoints
         }]
     });
-    
+
     for (var i = 0; i < arguments[0].length; i++) {
         dataPoints.push({
             label: arguments[0][i].geoName,
             y: arguments[0][i].value[0],
         });
-    
+
     }
     chart.render();
-    
-}
 
-var arr = [1,2,3,4];
+    }
 
-arr.forEach((number,index) => {
-    if(number>2)
-        console.log(number);
-})
-
-function functie(a,b,c){
-        console.log("Inside function");
-        console.log();
-        return 2;
-};
-
-
-function getData(country){
+    function getData(country){
     //console.log(country);
 
     $.ajax({
@@ -84,14 +67,9 @@ function getData(country){
             addData(data);
         }
     });
-}
-
-function functie(arg){
-    console.log(arg[0]);
-    return 17;
-}
-
-console.log(functie(new Array(20,1,2)));
+    }   
+});
+    
 </script>
 
 
