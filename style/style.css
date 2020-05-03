@@ -16,6 +16,10 @@
 	margin: auto;
 }
 
+.search-main:hover{
+    background-color: red;
+}
+
 #searchField{
     width: 40%;
     text-align: center;
@@ -24,3 +28,4 @@
     display:table-cell;
     margin:0 auto;
 }
+

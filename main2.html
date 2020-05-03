@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 <div id="chartContainer" style="height: 370px; width: 70%;"></div>
@@ -59,7 +59,6 @@ chart.render();
 }
 
 function getData(country){
-//console.log(country);
 
 $.ajax({
     url: "/trends/"+country,
