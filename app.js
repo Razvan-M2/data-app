@@ -14,18 +14,18 @@ app.use('/scripts',express.static('scripts'));
 app.use('/style',express.static('style'));
 
 app.get('/', (req,res) => {
-    res.sendFile(__dirname + '/main.html');
+    res.sendFile(__dirname + '/home.html');
 
 });
 
-//Get request with plain pathname main2
-app.get('/main2', (req,res) => {
-    res.sendFile(__dirname + "/main2.html");
+//Get request with plain pathname search
+app.get('/search', (req,res) => {
+    res.sendFile(__dirname + "/search.html");
 });
 
-//Middleware example to path main2
-app.use('/main2/:id', (req,res)=>{
-    res.sendFile(__dirname + "/main2.html");
+//Middleware example to path search
+app.use('/search/:id', (req,res)=>{
+    res.sendFile(__dirname + "/search.html");
     console.log(req.params);
 });
 
