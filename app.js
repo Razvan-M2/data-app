@@ -31,9 +31,10 @@ app.use('/search/:id', (req,res)=>{
 });
 
 //Middleware for trendings by country name translated to geoName in geoCodes
-app.use('/trends/:id', (req,res) => {
-    var countryCode = utilityAPI.countriesAPI.getCountryCodeByName(req.params.id);
-    utilityAPI.googleTrendsAPI.getTrends(   {keyword: 'Coronavirus',
+app.use('/trends/:country/:keyword', (req,res) => {
+    var countryCode = utilityAPI.countriesAPI.getCountryCodeByName(req.params.country);
+    var keyword = req.params.keyword;
+    utilityAPI.googleTrendsAPI.getTrends(  {keyword: keyword,
                                             startTime: new Date(Date.now() - (24 * 7 * 60 * 60 * 1000)),
                                             geo:countryCode},
                                             res);
