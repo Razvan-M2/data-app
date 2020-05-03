@@ -8,9 +8,9 @@
 <label for="cars">Choose a country:</label>
 
 <select id="countries" onchange="getData(document.getElementById('countries').value)">
-  <option value="Romania">Romania</option>
+  <!-- <option value="Romania">Romania</option>
   <option value="France">France</option>
-  <option value="USA">USA</option>
+  <option value="USA">USA</option> -->
 </select>
 
 <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
@@ -22,7 +22,19 @@
     var chart ;
     
 $(document).ready(function(){
-    
+    $.ajax({
+        url: "/allCountries",
+        type:"get",
+        dataType: "json",
+        success: function(data){
+        //console.log(data);
+            data.forEach((item) => {
+                console.log(item);
+                    var obj = `<option value="${item}">${item}</option>`;
+                    $('#countries').append(obj);
+            });
+    }
+    });
 });
 
 function addData() {
@@ -32,7 +44,7 @@ while(dataPoints.length > 0) {
 }
 
 chart = new CanvasJS.Chart("chartContainer", {
-    animationEnabled: true,
+    animationEnabled: false,
     theme: "light2",
     title: {
         text: "Searches with keyword Coronavirus by selected country states"

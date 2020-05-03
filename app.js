@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
-const googleAPI = require('./handle_backend/handle_data/googleAPI'); 
+const googleAPI = require('./handle_backend/handle_data/googleAPI');
+const utilityAPI = require('./handle_backend/utilityAPI'); 
 const fs = require('fs');
 
 //loaded environment variables from .env file
@@ -31,14 +32,20 @@ app.use('/search/:id', (req,res)=>{
 
 //Middleware for trendings by country name translated to geoName in geoCodes
 app.use('/trends/:id', (req,res) => {
-    googleAPI.getTrends({keyword: 'Coronavirus',
-                          startTime: new Date(Date.now() - (24 * 7 * 60 * 60 * 1000)),
-                          geo:countries[req.params.id]
-                         },res);
+    var countryCode = utilityAPI.countriesAPI.getCountryCodeByName(req.params.id);
+    utilityAPI.googleTrendsAPI.getTrends(   {keyword: 'Coronavirus',
+                                            startTime: new Date(Date.now() - (24 * 7 * 60 * 60 * 1000)),
+                                            geo:countryCode},
+                                            res);
+
 });
 
 app.use('/typing/:token', (req,res) => {
     googleAPI.getAutocomplete(req.params.token,res);
+});
+
+app.get('/allCountries',(req,res) =>{
+    res.send(utilityAPI.countriesAPI.getCountriesNameList());
 });
 
 module.exports = app;
