@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
-const googleAPI = require('./handle_backend/handle_data/googleAPI'); 
+const googleAPI = require('./handle_backend/handle_data/googleAPI');
+const utilityAPI = require('./handle_backend/utilityAPI'); 
 const fs = require('fs');
 
 //loaded environment variables from .env file
@@ -14,27 +15,30 @@ app.use('/scripts',express.static('scripts'));
 app.use('/style',express.static('style'));
 
 app.get('/', (req,res) => {
-    res.sendFile(__dirname + '/main.html');
+    res.sendFile(__dirname + '/home.html');
 
 });
 
-//Get request with plain pathname main2
-app.get('/main2', (req,res) => {
-    res.sendFile(__dirname + "/main2.html");
+//Get request with plain pathname search
+app.get('/search', (req,res) => {
+    res.sendFile(__dirname + "/search.html");
 });
 
-//Middleware example to path main2
-app.use('/main2/:id', (req,res)=>{
-    res.sendFile(__dirname + "/main2.html");
+//Middleware example to path search
+app.use('/search/:id', (req,res)=>{
+    res.sendFile(__dirname + "/search.html");
     console.log(req.params);
 });
 
 //Middleware for trendings by country name translated to geoName in geoCodes
-app.use('/trends/:id', (req,res) => {
-    googleAPI.getTrends({keyword: 'Coronavirus',
-                          startTime: new Date(Date.now() - (24 * 7 * 60 * 60 * 1000)),
-                          geo:countries[req.params.id]
-                         },res);
+app.use('/trends/:country/:keyword', (req,res) => {
+    var countryCode = utilityAPI.countriesAPI.getCountryCodeByName(req.params.country);
+    var keyword = req.params.keyword;
+    utilityAPI.googleTrendsAPI.getTrends(  {keyword: keyword,
+                                            startTime: new Date(Date.now() - (24 * 7 * 60 * 60 * 1000)),
+                                            geo:countryCode},
+                                            res);
+
 });
 
 
@@ -42,5 +46,11 @@ app.use('/typing/:token', (req,res) => {
     googleAPI.getAutocomplete(req.params.token,res);
 });
 
+<<<<<<< HEAD
+=======
+app.get('/allCountries',(req,res) =>{
+    res.send(utilityAPI.countriesAPI.getCountriesNameList());
+});
+>>>>>>> 3acb39c18f8430b0a3b9bf1761f63c586c1928d9
 
 module.exports = app;

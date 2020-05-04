@@ -17,7 +17,7 @@ module.exports = {
     },
 
     getAutocomplete : function getAutocomplete(text,res){
-
+        
         googleTrends.autoComplete({keyword: text},function(err,result){
             if(err)
                 throw err;
