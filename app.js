@@ -37,8 +37,10 @@ app.use('/trends/:id', (req,res) => {
                          },res);
 });
 
+
 app.use('/typing/:token', (req,res) => {
     googleAPI.getAutocomplete(req.params.token,res);
 });
+
 
 module.exports = app;
