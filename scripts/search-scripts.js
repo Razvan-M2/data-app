@@ -1,8 +1,9 @@
-//var constructorDiagrama=require('./diagram');
-var dataPoints = [];
-var chart ;
+var chart;
 var keyword;
-
+var dataPoints = {
+    label: [],
+    data: []
+};
 
 $(document).ready(function(){
 
@@ -33,36 +34,25 @@ $(document).ready(function(){
 
 function addData() {
     while(dataPoints.length > 0) {
-        dataPoints.pop();}
+        dataPoints.label.pop();
+        dataPoints.data.pop();
+    } 
 
-    chart = new CanvasJS.Chart("chartContainer", {
-        animationEnabled: true,
-        theme: "light2",
-        title: {
-            text: "Searches with keyword "+keyword+" by selected country states"
-        },
-        axisY: {
-            title: "Trending",
-            titleFontSize: 12
-        },
-        data: [{
-            type: "column",
-            dataPoints: dataPoints
-        }]
-    });
 
     console.log(arguments);
     for (var i = 0; i < arguments[0].length; i++) {
         if(arguments[0][i].value[0] == 0 )
             continue;
-        dataPoints.push({
-            label: arguments[0][i].geoName,
-            y: arguments[0][i].value[0],});
+        // dataPoints.push({
+        //     label: arguments[0][i].geoName,
+        //     y: arguments[0][i].value[0],});
+        dataPoints.label.push(arguments[0][i].geoName);
+        dataPoints.data.push(arguments[0][i].value[0]);
     }
-    chart.render();
-    diagram();
-    // var myChart=new diagram();
-    // myChart.render(); 
+    $('#chartContainer').remove();
+    $('body').append("<canvas id='chartContainer' style='height: 300px; width: 50%;'></canvas>");
+
+    chart = diagram("chartContainer",dataPoints);
 }
 
 function getData(country){
