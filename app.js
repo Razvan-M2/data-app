@@ -13,6 +13,7 @@ const countries = JSON.parse(fs.readFileSync(process.env.GEOCODES));
 app.use('/bootstrap-4.4.1-dist',express.static('bootstrap-4.4.1-dist'));
 app.use('/scripts',express.static('scripts'));
 app.use('/style',express.static('style'));
+app.use('/charts_js',express.static('charts_js'));
 
 app.get('/', (req,res) => {
     res.sendFile(__dirname + '/home.html');
