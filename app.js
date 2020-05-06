@@ -35,10 +35,9 @@ app.use('/trends/:country/:keyword', (req,res) => {
     var countryCode = utilityAPI.countriesAPI.getCountryCodeByName(req.params.country);
     var keyword = req.params.keyword;
     utilityAPI.googleTrendsAPI.getTrends(  {keyword: keyword,
-                                            startTime: new Date(Date.now() - (24 * 7 * 60 * 60 * 1000)),
+                                            startTime: new Date(Date.now() - (4 * 24 * 60 * 60 * 1000)),
                                             geo:countryCode},
                                             res);
-
 });
 
 
