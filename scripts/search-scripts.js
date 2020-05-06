@@ -49,6 +49,7 @@ function addData() {
             dataPoints: dataPoints
         }]
     });
+
     console.log(arguments);
     for (var i = 0; i < arguments[0].length; i++) {
         if(arguments[0][i].value[0] == 0 )
