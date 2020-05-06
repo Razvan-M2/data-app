@@ -1,5 +1,6 @@
 const http = require('http');
 const app = require('./app');
+const colors = require('colors');
 
 
 const port = process.env.PORT || 3000;
@@ -9,5 +10,6 @@ const server = http.createServer(app);
 server.listen(port,(err) => {
     if(err)
         console.log(err);
-    console.log("%cNow listening to port ","color:red"+port);
+    // console.log("%cNow listening to port ","color:red"+port);
+    console.log(`Now listening to port ${port}`.cyan);
 });
