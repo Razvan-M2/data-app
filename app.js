@@ -46,11 +46,9 @@ app.use('/typing/:token', (req,res) => {
     googleAPI.getAutocomplete(req.params.token,res);
 });
 
-<<<<<<< HEAD
-=======
 app.get('/allCountries',(req,res) =>{
     res.send(utilityAPI.countriesAPI.getCountriesNameList());
 });
->>>>>>> 3acb39c18f8430b0a3b9bf1761f63c586c1928d9
+
 
 module.exports = app;

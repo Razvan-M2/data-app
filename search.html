@@ -1,8 +1,11 @@
+
 <!DOCTYPE HTML>
 <html>
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="bootstrap-4.4.1-dist/css/bootstrap.min.css">
+   <!-- <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.css"> -->
+    <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
 </head>
 <body>
 <div id="chartContainer" style="height: 370px; width: 70%;"></div>
@@ -14,16 +17,21 @@
 <div class="input-group mb-3" style="width:35%;margin-left:32.5%;margin-right:32.5%;">
     <input id="keyInput" type="text" class="form-control" placeholder="Enter a keyword" aria-label="Username" aria-describedby="basic-addon1">
 </div>
-  
 
+<canvas id="myChart" width="400" height="400"></canvas>
+
+<script src="scripts/jquery-3.4.1.min.js"></script>
 <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-<script src="scripts/jquery-3.4.1.min.js"></script>
-<script src="scripts/search-scripts.js"></script>
-<script>
-  
-</script>
+<!--
+<script scr="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
+<script scr="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+<script scr="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
+-->
+<script scr="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 
+<script src="scripts/diagram.js"></script>
+<script src="scripts/search-scripts.js"></script>
 
 
 </body>

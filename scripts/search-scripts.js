@@ -1,3 +1,4 @@
+//var constructorDiagrama=require('./diagram');
 var dataPoints = [];
 var chart ;
 var keyword;
@@ -58,7 +59,9 @@ function addData() {
             y: arguments[0][i].value[0],});
     }
     chart.render();
-
+    diagram();
+    // var myChart=new diagram();
+    // myChart.render(); 
 }
 
 function getData(country){
@@ -74,5 +77,7 @@ function getData(country){
             addData(data);
         }
     });
+
+   
 }   
   
