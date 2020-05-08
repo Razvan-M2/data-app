@@ -61,8 +61,7 @@ function addData() {
     }
     chart.render();
     diagram();
-    // var myChart=new diagram();
-    // myChart.render(); 
+   
 }
 
 function getData(country){
