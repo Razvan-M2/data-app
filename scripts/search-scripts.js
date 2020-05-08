@@ -1,9 +1,20 @@
-//var constructorDiagrama=require('./diagram');
-var dataPoints = [];
-var chart ;
+var chart;
 var keyword;
+var dataPoints = {
+    label: [],
+    data: []
+};
 
 
+function getRandomIntInclusive(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
+  }
+
+
+var backColors=[];
+var bordColors=[];
 $(document).ready(function(){
 
     $.ajax({
@@ -33,35 +44,31 @@ $(document).ready(function(){
 
 function addData() {
     while(dataPoints.length > 0) {
-        dataPoints.pop();}
-
-    chart = new CanvasJS.Chart("chartContainer", {
-        animationEnabled: true,
-        theme: "light2",
-        title: {
-            text: "Searches with keyword "+keyword+" by selected country states"
-        },
-        axisY: {
-            title: "Trending",
-            titleFontSize: 12
-        },
-        data: [{
-            type: "column",
-            dataPoints: dataPoints
-        }]
-    });
+        dataPoints.label.pop();
+        dataPoints.data.pop();
+        backColors.pop();
+    } 
 
     console.log(arguments);
     for (var i = 0; i < arguments[0].length; i++) {
         if(arguments[0][i].value[0] == 0 )
             continue;
-        dataPoints.push({
-            label: arguments[0][i].geoName,
-            y: arguments[0][i].value[0],});
+
+        dataPoints.label.push(arguments[0][i].geoName);
+        dataPoints.data.push(arguments[0][i].value[0]);
+        let one=getRandomIntInclusive(0, 255);
+        let two=getRandomIntInclusive(0, 255);
+        let three=getRandomIntInclusive(0, 255);
+        backColors.push('rgba('+one+','+two+','+three+','+0.3+')');
+        bordColors.push('rgba('+one+','+two+','+three+','+1+')');
+        //'rgba(255, 99, 132, 0.3)'
     }
-    chart.render();
-    diagram();
-   
+
+    $('#chartContainer').remove();
+    $('body').append("<canvas id='chartContainer' style='height: 300px; width: 50%;'></canvas>");
+    console.log(backColors);
+    console.log(bordColors);
+    chart = diagram("chartContainer",dataPoints,backColors,bordColors);
 }
 
 function getData(country){
@@ -73,7 +80,6 @@ function getData(country){
         type:"get",
         dataType: "json",
         success: function(data){
-            //console.log(data);
             addData(data);
         }
     });

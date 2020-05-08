@@ -7,9 +7,6 @@ const fs = require('fs');
 //loaded environment variables from .env file
 require('dotenv').config();
 
-//inputed the object resulted from reading the geoCodes json in a constant
-const countries = JSON.parse(fs.readFileSync(process.env.GEOCODES));
-
 app.use('/bootstrap-4.4.1-dist',express.static('bootstrap-4.4.1-dist'));
 app.use('/scripts',express.static('scripts'));
 app.use('/style',express.static('style'));
