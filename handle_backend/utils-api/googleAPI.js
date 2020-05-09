@@ -4,20 +4,21 @@ const beautify = require('json-beautify');
 
 module.exports = {
 
-    getTrends : (object,res) => {
+    getTrends : function(object,res){
 
         googleTrends.interestByRegion(object, function(err, result){
             if(err) console.error('there was an error!', err);
             else{ 
                 var obj = JSON.parse(result);
                 // console.log(obj.default);
+                console.log(obj.default.geoMapData);
                 res.send(beautify(obj.default.geoMapData,null,2,100));
             };
         })
 
     },
 
-    getAutocomplete : (text,res) => {
+    getAutocomplete : function(text,res){
         
         googleTrends.autoComplete({keyword: text},function(err,result){
             if(err)
@@ -30,7 +31,7 @@ module.exports = {
 
     },
 
-    getInterestOverTime : (cluster,res) => {
+    getInterestOverTime : function(cluster,res){
         googleTrends.interestOverTime(  {keyword: cluster.keyword, 
                                          startTime: cluster.startTime,
                                          endTime: cluster.endTime, 

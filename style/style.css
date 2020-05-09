@@ -1,17 +1,24 @@
+/***********************/
+/**********Class***********/
+/***********************/
+
 .search{
     width: 25%;
-    height: 40px;
+    height: 140px;
 	position: relative;
 	top:40%;
 	bottom: 0;
 	left: 0;
 	right: 0;
-  	
 	margin: auto;
 }
 
+.search-main{
+    vertical-align:middle;
+
+}
 .search-main:hover{
-    background-color: red;
+    background-color: #1c4e99c2;
 }
 
 .coco
@@ -28,7 +35,11 @@
     color: #fff;
     background-color: #1c4e99c2;
     border-color: #1c4e99c2;
-  }
+}
+
+/***********************/
+/**********ID***********/
+/***********************/
 
 #searchField{
     width: 40%;
@@ -38,3 +49,29 @@
     display:table-cell;
     margin:0 auto;
 }
+
+#myHomeButton{
+    /*to add**/
+    width:30%;
+    margin-left:35%;
+    margin-right:35%;
+}
+
+
+
+
+::-webkit-input-placeholder {
+    text-align: center;
+ }
+ 
+ :-moz-placeholder { /* Firefox 18- */
+    text-align: center;  
+ }
+ 
+ ::-moz-placeholder {  /* Firefox 19+ */
+    text-align: center;  
+ }
+ 
+ :-ms-input-placeholder {  
+    text-align: center; 
+ }
