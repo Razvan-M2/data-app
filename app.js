@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const googleAPI = require('./handle_backend/handle_data/googleAPI');
+const googleAPI = require('./handle_backend/utils-api/googleAPI');
 const utilityAPI = require('./handle_backend/utilityAPI'); 
 const fs = require('fs');
 
@@ -22,12 +22,6 @@ app.get('/search', (req,res) => {
     res.sendFile(__dirname + "/search.html");
 });
 
-//Middleware example to path search
-app.use('/search/:id', (req,res)=>{
-    res.sendFile(__dirname + "/search.html");
-    console.log(req.params);
-});
-
 //Middleware for trendings by country name translated to geoName in geoCodes
 app.use('/trends/:country/:keyword', (req,res) => {
     var countryCode = utilityAPI.countriesAPI.getCountryCodeByName(req.params.country);
@@ -37,7 +31,6 @@ app.use('/trends/:country/:keyword', (req,res) => {
                                             geo:countryCode},
                                             res);
 });
-
 
 app.use('/typing/:token', (req,res) => {
     googleAPI.getAutocomplete(req.params.token,res);

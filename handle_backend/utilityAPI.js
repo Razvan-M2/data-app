@@ -1,5 +1,5 @@
-const countryAPI = require('./handle_data/countryAPI');
-const googleTrends = require('./handle_data/googleAPI');
+const countryAPI = require('./utils-api/countryAPI');
+const googleTrends = require('./utils-api/googleAPI');
 
 module.exports = {
 

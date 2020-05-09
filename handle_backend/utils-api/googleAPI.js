@@ -3,7 +3,8 @@ const beautify = require('json-beautify');
 
 
 module.exports = {
-    getTrends : function getTrends(object,res){
+
+    getTrends : (object,res) => {
 
         googleTrends.interestByRegion(object, function(err, result){
             if(err) console.error('there was an error!', err);
@@ -16,7 +17,7 @@ module.exports = {
 
     },
 
-    getAutocomplete : function getAutocomplete(text,res){
+    getAutocomplete : (text,res) => {
         
         googleTrends.autoComplete({keyword: text},function(err,result){
             if(err)
@@ -27,6 +28,18 @@ module.exports = {
             };
         });
 
+    },
+
+    getInterestOverTime : (cluster,res) => {
+        googleTrends.interestOverTime(  {keyword: cluster.keyword, 
+                                         startTime: cluster.startTime,
+                                         endTime: cluster.endTime, 
+                                         geo: cluster.geo},
+            (err,result)=>{
+                console.log(result);    
+            
+            }
+        );
     }
     
 }

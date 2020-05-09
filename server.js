@@ -9,6 +9,6 @@ const server = http.createServer(app);
 
 server.listen(port,(err) => {
     if(err) console.log(err)
-    console.log("Now listening to port " + port);
+    console.log(`Now listening to port ${port}`.blue);
     
 });
