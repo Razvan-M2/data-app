@@ -22,10 +22,12 @@ $(document).ready(function(){
         type:"get",
         dataType: "json",
         success: function(data){
-        //console.log(data);
             data.forEach((item) => {
                     var obj = `<option value="${item}">${item}</option>`;
                     $('#countries').append(obj);});
+            data.forEach( (index,valoare) => {
+                
+            })
     }
     });
 
