@@ -47,6 +47,7 @@ function addData() {
         dataPoints.label.pop();
         dataPoints.data.pop();
         backColors.pop();
+        bordColors.pop();
     } 
 
     console.log(arguments);
