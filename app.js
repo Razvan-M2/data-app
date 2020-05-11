@@ -4,6 +4,37 @@ const googleAPI = require('./handle_backend/utils-api/googleAPI');
 const utilityAPI = require('./handle_backend/utilityAPI'); 
 const fs = require('fs');
 
+var timeManager=[{
+    interval: "Ultima ora",
+    miliseconds: 3600000 
+},
+{
+    interval: "Ultimele 4 ore",
+    miliseconds: 14400000 
+},
+
+{
+    interval: "Ultimea zi",
+    miliseconds: 86400000 
+},
+{
+    interval: "Ultimeele 30 zile",
+    miliseconds: 2592000000 
+},
+{
+    interval: "Ultimeele 90 zile",
+    miliseconds: 7776000000 
+},
+{
+    interval: "Ultimele 12 luni",
+    miliseconds: 31557600000 
+},
+{
+    interval: "Ultimii 5 ani",
+    miliseconds: 157788000000 
+}
+]
+
 //loaded environment variables from .env file
 require('dotenv').config();
 
