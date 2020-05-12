@@ -1,0 +1,35 @@
+<div id="panelSearch">
+
+<div class="input-group mb-3" style="width:35%;margin-left:32.5%;margin-right:32.5%;">
+    <input id="keyInput" type="text" class="form-control" placeholder="Enter a keyword" aria-label="Username" aria-describedby="basic-addon1">
+</div>
+
+<label for="countries">Choose a country:</label>
+<select class="form-control" name="countries" id="countries" onchange="getData(document.getElementById('countries').value)">
+</select>
+
+<label for="time">Choose an interval of time:</label>
+<select class="form-control" name="time" id="time">
+    <option >Ultima ora</option>
+    <option >Ultimele 4 ore</option>
+    <option >Ultima zi</option>
+    <option >Ultimele 30 de zile</option>
+    <option >Ultimele 90 de zile</option>
+    <option >Ultimele 12 luni</option>    
+    <option >Ultimii 5 ani</option>
+</select>
+
+</div>
+
+
+
+<div id="panelData">
+    
+    <div id="trendingChart">
+        <canvas id="chartContainer" style="height: 300px; width: 50%;"></canvas>
+    </div>
+
+    <div id="interestOverTimeChart">
+    </div>
+
+</div>

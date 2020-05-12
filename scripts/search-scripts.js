@@ -45,6 +45,7 @@ $(document).ready(function(){
 });
 
 function addData() {
+    
     while(dataPoints.length > 0) {
         dataPoints.label.pop();
         dataPoints.data.pop();
@@ -68,7 +69,7 @@ function addData() {
     }
 
     $('#chartContainer').remove();
-    $('body').append("<canvas id='chartContainer' style='height: 300px; width: 50%;'></canvas>");
+    $('#panelData').append("<canvas id='chartContainer' style='height: 300px; width: 50%;'></canvas>");
     console.log(backColors);
     console.log(bordColors);
     chart = diagram("chartContainer",dataPoints,backColors,bordColors);
