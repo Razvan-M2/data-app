@@ -57,21 +57,44 @@
     margin-right:35%;
 }
 
+#headerPar{
+    display: inline;
+    margin-left:12%;
+    margin-right:13%;
+}
+
+#panelSearch{
+    float:left;
+    margin-left:0px;
+    margin-right:0px;
+    width:30%; 
+    height:100%;
+    height:auto;
+}
+
+#panelData{
+    float:left;
+    margin-left:0px;
+    margin-right:0px;
+    width:70%;
+    height:100%;
+    height:auto; 
+}
 
 
 
-::-webkit-input-placeholder {
+/* ::-webkit-input-placeholder {
     text-align: center;
  }
  
  :-moz-placeholder { /* Firefox 18- */
-    text-align: center;  
+    /*text-align: center;  
  }
  
  ::-moz-placeholder {  /* Firefox 19+ */
-    text-align: center;  
+  /*  text-align: center;  
  }
  
  :-ms-input-placeholder {  
     text-align: center; 
- }
+ } */
