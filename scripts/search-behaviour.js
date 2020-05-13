@@ -91,7 +91,7 @@ initiateData = (country,keyword,time) => {
 
     generateTrendingChart(country,keyword,time);
     generateInterestOverTimeChart(country,keyword,time);
-    
+
 }
 
 updateCharts = (country, keyword, time) => {
@@ -100,7 +100,7 @@ updateCharts = (country, keyword, time) => {
         type: 'GET',
         url: '/trends/' + country + "/" + keyword + "/" + getMilliSeconds(time),
         success: (data) => {
-            console.log(data);
+            //console.log(data);
             backColors = [];
             bordColors = [];
             dataPoints = {
@@ -121,6 +121,9 @@ updateCharts = (country, keyword, time) => {
                 bordColors.push('rgba('+one+','+two+','+three+','+1+')');
                 //'rgba(255, 99, 132, 0.3)'
             }
+
+            console.log(backColors);
+            console.log(dataPoints);
             
             var cluster1 = {
                 container : 'trendingChart',

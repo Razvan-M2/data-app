@@ -34,6 +34,10 @@ app.post('/search', (req,res) => {
     res.render('search',{ searchedKeyword:req.body.keyword });
 });
 
+app.get('/search', (req,res) => {
+    res.render('search',{ searchedKeyword:"cats"});
+});
+
 //Middleware for trendings by country name translated to geoName in geoCodes
 app.use('/trends/:country/:keyword/:time', (req,res) => {
     var time = req.params.time;
