@@ -31,16 +31,16 @@ app.get('/', (req,res) => {
 //Get request with plain pathname search
 app.post('/search', (req,res) => {
     //res.sendFile(__dirname + "/search.html");
-    console.log(req.body.keyword);
     res.render('search',{ searchedKeyword:req.body.keyword });
 });
 
 //Middleware for trendings by country name translated to geoName in geoCodes
-app.use('/trends/:country/:keyword', (req,res) => {
+app.use('/trends/:country/:keyword/:time', (req,res) => {
+    var time = req.params.time;
     var countryCode = utilityAPI.countriesAPI.getCountryCodeByName(req.params.country);
     var keyword = req.params.keyword;
     utilityAPI.googleTrendsAPI.getTrends(  {keyword: keyword,
-                                            startTime: new Date(Date.now() - (7 * 24 * 60 * 60 * 1000)),
+                                            startTime: new Date(Date.now() - time),
                                             geo:countryCode},
                                             res);
 });

@@ -10,8 +10,6 @@ module.exports = {
             if(err) console.error('there was an error!', err);
             else{ 
                 var obj = JSON.parse(result);
-                // console.log(obj.default);
-                //console.log(obj.default.geoMapData);
                 res.send(beautify(obj.default.geoMapData,null,2,100));
             };
         })
@@ -36,8 +34,7 @@ module.exports = {
                                          startTime: cluster.startTime,
                                          endTime: cluster.endTime, 
                                          geo: cluster.geo},
-            (err,result)=>{
-                console.log(result);    
+            (err,result)=>{    
             
             }
         );

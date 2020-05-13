@@ -1,14 +1,14 @@
 <div id="panelSearch">
 
-<div class="input-group mb-3" style="width:35%;margin-left:32.5%;margin-right:32.5%;">
+<div class="input-group mb-3" style="width:70%;margin-left:15%;margin-right:15%;margin-top:100px;">
     <input id="keyInput" type="text" class="form-control" placeholder="Enter a keyword" aria-label="Username" aria-describedby="basic-addon1" value={{searchedKeyword}}>
 </div>
 
-<label for="countries">Choose a country:</label>
-<select class="form-control" name="countries" id="countries">
+<label for="countries" style="margin-top:100px;">Choose a country:</label>
+    <select class="form-control" name="countries" id="countries">
 </select>
 
-<label for="time">Choose an interval of time:</label>
+<label for="time" style="margin-top:100px;">Choose an interval of time:</label>
 <select class="form-control" name="time" id="time">
     <option value = "1 ora" >Ultima ora</option>
     <option value = "4 ore" >Ultimele 4 ore</option>
@@ -25,12 +25,9 @@
 
 <div id="panelData">
     
-    <div id="trendingChart" class="chart-container">
-        <canvas id="chart1" style="height: 300px; width: 50%;"></canvas>
-    </div>
+    <canvas id="chart1" class="canvas-chart"></canvas>
 
-    <div id="interestOverTimeChart">
-    </div>
+    <canvas id="chart2" class="canvas-chart"></canvas>
 
 </div>
 <script>
@@ -52,7 +49,7 @@
 
         $("#countries").val("Romania");
         
-        initiateData("Romania",$('#keyInput').val());
+        initiateData("Romania",$('#keyInput').val(),"7 zile");
 
     });
 </script>
