@@ -57,7 +57,7 @@ class GraphCollection{
             data: {
                 labels: [1,2,3,4,5,6,7,8],
                 datasets: [{
-                    label: `The interest over time for the searched keyword`,
+                    label: `This is under development`,
                     data: [10,20,30,40,10,20,30,40]
                 }]
             },
