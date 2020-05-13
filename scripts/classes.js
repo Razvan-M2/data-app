@@ -1,52 +1,85 @@
-/*****      HERE WE CREATE, UPDATE AND MANAGE OUR GRAPHS INSTANCES   ******/
+/*****      HERE WE CREATE, UPDATE AND MANAGE OUR CLASSES INSTANCES   ******/
 
 class GraphCollection{
 
-    #graphs;
-    
+    #trendingGraph;
+    #interestOverTimeGraph;
+
     constructor(){
-        this.#graphs = [];
+        this.#trendingGraph = {};
     }
 
-    addGraph = (graph,id) => {
-        this.#graphs.push(graph,id);
-    }
+    createTrendingGraph = (cluster) => {
 
-    getGraphs(){
-        return this.#graphs;
-    }
+        var ctx = document.getElementById(cluster.id).getContext('2d');
 
-}
-
-function diagram(id,dataPoints,backColors,bordColors){
-
-    var ctx = document.getElementById(id).getContext('2d');
-    // var ctx = $(id).getContext('2d');
-
-
-    return new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: dataPoints.label,
-            datasets: [{
-                label: 'Dumy diagram',
-                data: dataPoints.data,
-                backgroundColor: backColors,
-                borderColor: bordColors,
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive:false,
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
+        this.#trendingGraph = {
+            id : cluster.id,
+            container : cluster.container,
+            chart : new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: cluster.dataPoints.label,
+                    datasets: [{
+                        label: `Trending rate of the searched keyword by counties`,
+                        data: cluster.dataPoints.data,
+                        backgroundColor: cluster.backColors,
+                        borderColor: cluster.bordColors,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive:false,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
                     }
-                }]
-            }
+                },
+            })
         }
 
-    });
+    }
+    updateTrendingChart = (cluster) => {
+        console.log(cluster);
+        this.#trendingGraph.chart.data.datasets[0].label = `Trending rate of the searched keyword by counties`;
+        this.#trendingGraph.chart.data.labels = cluster.dataPoints.label;
+        this.#trendingGraph.chart.data.datasets[0].data = cluster.dataPoints.data;
+        this.#trendingGraph.chart.update();
+    }
+    createInterestOverTimeGraph = () => {
+        var ctx = document.getElementById('chart2').getContext('2d');
+        
+        var myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [1,2,3,4,5,6,7,8],
+                datasets: [{
+                    label: `This is under development`,
+                    data: [10,20,30,40,10,20,30,40]
+                }]
+            },
+            options: {
+                responsive:false,
+                DrawOnChartArea:false
+                // scales: {
+                //     yAxes: [{
+                //         stacked: true
+                //     }]      
+                // }
+            }
+        });
+    }
+    updateInterestOverTimeGraph = (cluster) => {
+
+    }
+
+    getTrendingGraphData(){
+        return this.#trendingGraph.chart;
+    }
 
 }
+
+var graphs = new GraphCollection();

@@ -4,41 +4,12 @@ const googleAPI = require('./handle_backend/utils-api/googleAPI');
 const utilityAPI = require('./handle_backend/utilityAPI'); 
 const fs = require('fs');
 const exphbs = require('express-handlebars');
-
-var timeManager=[{
-    interval: "Ultima ora",
-    miliseconds: 3600000 
-},
-{
-    interval: "Ultimele 4 ore",
-    miliseconds: 14400000 
-},
-
-{
-    interval: "Ultimea zi",
-    miliseconds: 86400000 
-},
-{
-    interval: "Ultimeele 30 zile",
-    miliseconds: 2592000000 
-},
-{
-    interval: "Ultimeele 90 zile",
-    miliseconds: 7776000000 
-},
-{
-    interval: "Ultimele 12 luni",
-    miliseconds: 31557600000 
-},
-{
-    interval: "Ultimii 5 ani",
-    miliseconds: 157788000000 
-}
-]
-
+const bodyParser = require('body-parser');
 //loaded environment variables from .env file
 require('dotenv').config();
 
+
+app.use(bodyParser.urlencoded({ extended: true })); 
 app.use('/font-awesome',express.static('font-awesome'));
 app.use('/bootstrap-4.4.1-dist',express.static('bootstrap-4.4.1-dist'));
 app.use('/scripts',express.static('scripts'));
@@ -58,17 +29,18 @@ app.get('/', (req,res) => {
 });
 
 //Get request with plain pathname search
-app.get('/search', (req,res) => {
+app.post('/search', (req,res) => {
     //res.sendFile(__dirname + "/search.html");
-    res.render('search');
+    res.render('search',{ searchedKeyword:req.body.keyword });
 });
 
 //Middleware for trendings by country name translated to geoName in geoCodes
-app.use('/trends/:country/:keyword', (req,res) => {
+app.use('/trends/:country/:keyword/:time', (req,res) => {
+    var time = req.params.time;
     var countryCode = utilityAPI.countriesAPI.getCountryCodeByName(req.params.country);
     var keyword = req.params.keyword;
     utilityAPI.googleTrendsAPI.getTrends(  {keyword: keyword,
-                                            startTime: new Date(Date.now() - (7 * 24 * 60 * 60 * 1000)),
+                                            startTime: new Date(Date.now() - time),
                                             geo:countryCode},
                                             res);
 });

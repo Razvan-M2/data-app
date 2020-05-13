@@ -37,6 +37,29 @@
     border-color: #1c4e99c2;
 }
 
+.canvas-chart{
+    height: 300px;
+    width:70%; 
+    background-color:white;
+    padding:10px;
+    margin-left:15%;
+    margin-left:15%;
+    margin-top:40px;
+    margin-bottom:40px;
+    border-radius:7px;
+}
+
+.chart-container{
+    background-color: white;
+    margin-left:20%;
+}
+
+.form-control{
+    width:70%;
+    margin-left:15%;
+    margin-right:15%;
+}
+
 /***********************/
 /**********ID***********/
 /***********************/
@@ -64,6 +87,7 @@
 }
 
 #panelSearch{
+    position:fixed;
     float:left;
     margin-left:0px;
     margin-right:0px;
@@ -74,11 +98,12 @@
 
 #panelData{
     float:left;
-    margin-left:0px;
+    margin-left:30%;
     margin-right:0px;
     width:70%;
     height:100%;
-    height:auto; 
+    height:auto;
+    background-color: rgb(240,240,240); 
 }
 
 
