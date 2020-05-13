@@ -5,18 +5,18 @@
 </div>
 
 <label for="countries">Choose a country:</label>
-<select class="form-control" name="countries" id="countries" onchange="getData(document.getElementById('countries').value)">
+<select class="form-control" name="countries" id="countries">
 </select>
 
 <label for="time">Choose an interval of time:</label>
 <select class="form-control" name="time" id="time">
-    <option >Ultima ora</option>
-    <option >Ultimele 4 ore</option>
-    <option >Ultima zi</option>
-    <option >Ultimele 30 de zile</option>
-    <option >Ultimele 90 de zile</option>
-    <option >Ultimele 12 luni</option>    
-    <option >Ultimii 5 ani</option>
+    <option value = "1 ora" >Ultima ora</option>
+    <option value = "4 ore" >Ultimele 4 ore</option>
+    <option value = "1 zi" >Ultima zi</option>
+    <option value = "30 zile" >Ultimele 30 de zile</option>
+    <option value = "90 zile" >Ultimele 90 de zile</option>
+    <option value = "12 luni" >Ultimele 12 luni</option>    
+    <option value = "5 ani" >Ultimii 5 ani</option>
 </select>
 
 </div>
@@ -25,16 +25,20 @@
 
 <div id="panelData">
     
-    <div id="trendingChart">
-        <canvas id="chartContainer" style="height: 300px; width: 50%;"></canvas>
+    <div id="trendingChart" class="chart-container">
+        <canvas id="chart1" style="height: 300px; width: 50%;"></canvas>
     </div>
 
     <div id="interestOverTimeChart">
     </div>
 
 </div>
-
 <script>
+
+    
+    $(document).ready(()=>{
+        var graphs = new GraphCollection();
+
         $.ajax({
         url: "/allCountries",
         type:"get",
@@ -43,14 +47,12 @@
             data.forEach((item) => {
                     var obj = `<option value="${item}">${item}</option>`;
                     $('#countries').append(obj);});
-            data.forEach( (index,valoare) => {
-                
-            })
-    }
-    });
-    $
-    $(document).ready(()=>{
+        }
+        });
+
         $("#countries").val("Romania");
-        getData("Romania");
+        
+        initiateData("Romania",$('#keyInput').val());
+
     });
 </script>

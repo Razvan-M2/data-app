@@ -37,6 +37,11 @@
     border-color: #1c4e99c2;
 }
 
+.chart-container{
+    background-color: white;
+    
+
+}
 /***********************/
 /**********ID***********/
 /***********************/
@@ -78,7 +83,8 @@
     margin-right:0px;
     width:70%;
     height:100%;
-    height:auto; 
+    height:auto;
+    background-color:gray; 
 }
 
 

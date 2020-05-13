@@ -2,56 +2,58 @@
 
 class GraphCollection{
 
-    #graphs;
+    #trendingGraph;
     
     constructor(){
-        this.#graphs = [];
+        this.#trendingGraph = {};
     }
 
-    addGraph = (id,parent,dataPoints,backColors,bordColors) => {
+    createTrendingGraph = (cluster1) => {
 
-        var ctx = document.getElementById(id).getContext('2d');
+        var ctx = document.getElementById(cluster1.id).getContext('2d');
 
-        this.#graphs.push(
-            {
-                chart:new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: dataPoints.label,
-                        datasets: [{
-                            label: 'Dumy diagram',
-                            data: dataPoints.data,
-                            backgroundColor: backColors,
-                            borderColor: bordColors,
-                            borderWidth: 1
+        this.#trendingGraph = {
+            id : cluster1.id,
+            container : cluster1.container,
+            chart : new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: cluster1.dataPoints.label,
+                    datasets: [{
+                        label: `The trending by counties`,
+                        data: cluster1.dataPoints.data,
+                        backgroundColor: cluster1.backColors,
+                        borderColor: cluster1.bordColors,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive:false,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
                         }]
-                    },
-                    options: {
-                        responsive:false,
-                        scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: true
-                                }
-                            }]
-                        }
-                    },
-            }),
-                container:parent,
-                id:id
+                    }
+                },
+            })
         }
-        );
 
     }
 
-    updateGraphs = (datasets) => {
+    createInterestOverTimeGraph = (cluster) => {
+
+    }
+
+    updateGraphs = (cluster1) => {
 
     }
 
     getGraphs(){
-        return this.#graphs;
+        return [this.#trendingGraph];
     }
 
 }
 
-var chart = new GraphCollection();
+var graphs = new GraphCollection();
