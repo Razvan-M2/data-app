@@ -29,6 +29,7 @@ class GraphCollection{
                     }]
                 },
                 options: {
+                    maintainAspectRatio:false,
                     responsive:false,
                     scales: {
                         yAxes: [{
@@ -40,6 +41,9 @@ class GraphCollection{
                 },
             })
         }
+        console.log(this.#trendingGraph.chart.canvas);
+        this.#trendingGraph.chart.canvas.style.height = "50vh";
+        this.#trendingGraph.chart.canvas.style.width = '70%';
 
     }
     updateTrendingChart = (cluster) => {
@@ -52,7 +56,7 @@ class GraphCollection{
     createInterestOverTimeGraph = () => {
         var ctx = document.getElementById('chart2').getContext('2d');
         
-        var myLineChart = new Chart(ctx, {
+        this.#interestOverTimeGraph = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: [1,2,3,4,5,6,7,8],
@@ -71,6 +75,9 @@ class GraphCollection{
                 // }
             }
         });
+
+        this.#interestOverTimeGraph.chart.canvas.style.height = "50vh";
+        this.#interestOverTimeGraph.chart.canvas.style.width = '70%';
     }
     updateInterestOverTimeGraph = (cluster) => {
 
