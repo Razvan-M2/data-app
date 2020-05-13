@@ -1,7 +1,7 @@
 <div id="panelSearch">
 
 <div class="input-group mb-3" style="width:35%;margin-left:32.5%;margin-right:32.5%;">
-    <input id="keyInput" type="text" class="form-control" placeholder="Enter a keyword" aria-label="Username" aria-describedby="basic-addon1">
+    <input id="keyInput" type="text" class="form-control" placeholder="Enter a keyword" aria-label="Username" aria-describedby="basic-addon1" value={{searchedKeyword}}>
 </div>
 
 <label for="countries">Choose a country:</label>
@@ -33,3 +33,24 @@
     </div>
 
 </div>
+
+<script>
+        $.ajax({
+        url: "/allCountries",
+        type:"get",
+        dataType: "json",
+        success: function(data){
+            data.forEach((item) => {
+                    var obj = `<option value="${item}">${item}</option>`;
+                    $('#countries').append(obj);});
+            data.forEach( (index,valoare) => {
+                
+            })
+    }
+    });
+    $
+    $(document).ready(()=>{
+        $("#countries").val("Romania");
+        getData("Romania");
+    });
+</script>

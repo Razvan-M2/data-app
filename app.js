@@ -4,10 +4,12 @@ const googleAPI = require('./handle_backend/utils-api/googleAPI');
 const utilityAPI = require('./handle_backend/utilityAPI'); 
 const fs = require('fs');
 const exphbs = require('express-handlebars');
-
+const bodyParser = require('body-parser');
 //loaded environment variables from .env file
 require('dotenv').config();
 
+
+app.use(bodyParser.urlencoded({ extended: true })); 
 app.use('/font-awesome',express.static('font-awesome'));
 app.use('/bootstrap-4.4.1-dist',express.static('bootstrap-4.4.1-dist'));
 app.use('/scripts',express.static('scripts'));
@@ -27,9 +29,10 @@ app.get('/', (req,res) => {
 });
 
 //Get request with plain pathname search
-app.get('/search', (req,res) => {
+app.post('/search', (req,res) => {
     //res.sendFile(__dirname + "/search.html");
-    res.render('search');
+    console.log(req.body.keyword);
+    res.render('search',{ searchedKeyword:req.body.keyword });
 });
 
 //Middleware for trendings by country name translated to geoName in geoCodes

@@ -1,4 +1,4 @@
-/*****      HERE WE CREATE, UPDATE AND MANAGE OUR GRAPHS INSTANCES   ******/
+/*****      HERE WE CREATE, UPDATE AND MANAGE OUR CLASSES INSTANCES   ******/
 
 class GraphCollection{
 
@@ -8,8 +8,44 @@ class GraphCollection{
         this.#graphs = [];
     }
 
-    addGraph = (graph,id) => {
-        this.#graphs.push(graph,id);
+    addGraph = (id,parent,dataPoints,backColors,bordColors) => {
+
+        var ctx = document.getElementById(id).getContext('2d');
+
+        this.#graphs.push(
+            {
+                chart:new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: dataPoints.label,
+                        datasets: [{
+                            label: 'Dumy diagram',
+                            data: dataPoints.data,
+                            backgroundColor: backColors,
+                            borderColor: bordColors,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive:false,
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    },
+            }),
+                container:parent,
+                id:id
+        }
+        );
+
+    }
+
+    updateGraphs = (datasets) => {
+
     }
 
     getGraphs(){
@@ -18,35 +54,4 @@ class GraphCollection{
 
 }
 
-function diagram(id,dataPoints,backColors,bordColors){
-
-    var ctx = document.getElementById(id).getContext('2d');
-    // var ctx = $(id).getContext('2d');
-
-
-    return new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: dataPoints.label,
-            datasets: [{
-                label: 'Dumy diagram',
-                data: dataPoints.data,
-                backgroundColor: backColors,
-                borderColor: bordColors,
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive:false,
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
-
-    });
-
-}
+var chart = new GraphCollection();

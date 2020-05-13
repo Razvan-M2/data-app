@@ -11,7 +11,7 @@ module.exports = {
             else{ 
                 var obj = JSON.parse(result);
                 // console.log(obj.default);
-                console.log(obj.default.geoMapData);
+                //console.log(obj.default.geoMapData);
                 res.send(beautify(obj.default.geoMapData,null,2,100));
             };
         })

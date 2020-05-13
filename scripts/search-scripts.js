@@ -1,35 +1,21 @@
-var chart;
 var keyword;
 var dataPoints = {
     label: [],
     data: []
 };
 
-
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
-  }
+}
 
 
 var backColors=[];
 var bordColors=[];
 $(document).ready(function(){
 
-    $.ajax({
-        url: "/allCountries",
-        type:"get",
-        dataType: "json",
-        success: function(data){
-            data.forEach((item) => {
-                    var obj = `<option value="${item}">${item}</option>`;
-                    $('#countries').append(obj);});
-            data.forEach( (index,valoare) => {
-                
-            })
-    }
-    });
+
 
     $('#countries').click(()=>{
         if($('#keyInput').val().length == 0)
@@ -42,10 +28,12 @@ $(document).ready(function(){
         getData(selected_country);
     });
 
+
+
 });
 
 function addData() {
-    
+
     while(dataPoints.length > 0) {
         dataPoints.label.pop();
         dataPoints.data.pop();
@@ -68,10 +56,10 @@ function addData() {
     }
 
     $('#chartContainer').remove();
-    $('#panelData').append("<canvas id='chartContainer' style='height: 300px; width: 50%;'></canvas>");
+    $('#trendingChart').append("<canvas id='chartContainer' style='height: 300px; width: 50%;'></canvas>");
     console.log(backColors);
     console.log(bordColors);
-    chart = diagram("chartContainer",dataPoints,backColors,bordColors);
+    chart.addGraph('chartContainer','trendingChart',dataPoints,backColors,bordColors);
 }
 
 function getData(country){
