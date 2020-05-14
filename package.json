@@ -23,6 +23,7 @@
     "json-beautify": "^1.1.1",
     "json-format": "^1.0.1",
     "mongo-client": "^0.2.1",
-    "mongoose": "^5.9.11"
+    "mongoose": "^5.9.11",
+    "nodemon": "^2.0.4"
   }
 }

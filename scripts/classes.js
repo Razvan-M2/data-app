@@ -47,22 +47,22 @@ class GraphCollection{
 
     }
     updateTrendingChart = (cluster) => {
-        console.log(cluster);
+        //console.log(cluster);
         this.#trendingGraph.chart.data.datasets[0].label = `Trending rate of the searched keyword by counties`;
         this.#trendingGraph.chart.data.labels = cluster.dataPoints.label;
         this.#trendingGraph.chart.data.datasets[0].data = cluster.dataPoints.data;
         this.#trendingGraph.chart.update();
     }
-    createInterestOverTimeGraph = () => {
+    createInterestOverTimeGraph = (cluster) => {
         var ctx = document.getElementById('chart2').getContext('2d');
         
         this.#interestOverTimeGraph = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: [1,2,3,4,5,6,7,8],
+                labels: cluster.dataPoints.labels,
                 datasets: [{
-                    label: `This is under development`,
-                    data: [10,20,30,40,10,20,30,40]
+                    label: cluster.title,
+                    data: cluster.dataPoints.data
                 }]
             },
             options: {
@@ -76,15 +76,23 @@ class GraphCollection{
             }
         });
 
-        this.#interestOverTimeGraph.chart.canvas.style.height = "50vh";
-        this.#interestOverTimeGraph.chart.canvas.style.width = '70%';
+        this.#interestOverTimeGraph.canvas.style.height = "50vh";
+        this.#interestOverTimeGraph.canvas.style.width = '70%';
     }
     updateInterestOverTimeGraph = (cluster) => {
-
+        console.log(cluster);
+        this.#interestOverTimeGraph.data.labels = cluster.dataPoints.labels;
+        this.#interestOverTimeGraph.chart.data.datasets[0].data = cluster.dataPoints.data;
+        this.#interestOverTimeGraph.chart.data.datasets[0].label = cluster.title;
+        this.#interestOverTimeGraph.update();
     }
 
-    getTrendingGraphData(){
-        return this.#trendingGraph.chart;
+    getTrendingGraphData = () => {
+        return this.#trendingGraph.data.datasets;
+    }
+
+    getInterestOverTime = () => {
+        return this.#interestOverTimeGraph.data.datasets;
     }
 
 }

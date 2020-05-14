@@ -10,13 +10,15 @@
 
 <label for="time" style="margin-top:100px;">Choose an interval of time:</label>
 <select class="form-control search-control" name="time" id="time">
-    <option value = "1 ora" >Ultima ora</option>
-    <option value = "4 ore" >Ultimele 4 ore</option>
-    <option value = "1 zi" >Ultima zi</option>
-    <option value = "30 zile" >Ultimele 30 de zile</option>
-    <option value = "90 zile" >Ultimele 90 de zile</option>
-    <option value = "12 luni" >Ultimele 12 luni</option>    
-    <option value = "5 ani" >Ultimii 5 ani</option>
+    {{!-- <option value = "h 1" >Ultima ora</option>
+    <option value = "h 4" >Ultimele 4 ore</option> --}}
+    <option value = "d 3" >Ultimele 3 zile</option>
+    <option value = "d 9" >Ultimele 7 zile</option>
+    <option value = "d 30" >Ultimele 30 de zile</option>
+    <option value = "d 90" >Ultimele 90 de zile</option>
+    <option value = "m 12" >Ultimele 12 luni</option>    
+    <option value = "y 5" >Ultimii 5 ani</option>
+    <option value = "y 16" > Ultimii 16 ani</option>
 </select>
 
 </div>
@@ -49,7 +51,7 @@
 
         $("#countries").val("Romania");
         
-        initiateData("Romania",$('#keyInput').val(),"7 zile");
+        initiateData("Romania",$('#keyInput').val(),"d 7");
 
     });
 </script>

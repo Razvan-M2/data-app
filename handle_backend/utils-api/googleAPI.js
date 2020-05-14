@@ -30,12 +30,15 @@ module.exports = {
     },
 
     getInterestOverTime : function(cluster,res){
-        googleTrends.interestOverTime(  {keyword: cluster.keyword, 
-                                         startTime: cluster.startTime,
-                                         endTime: cluster.endTime, 
-                                         geo: cluster.geo},
-            (err,result)=>{    
-            
+        googleTrends.interestOverTime(  cluster,
+            function(err,result){   
+                if(err)
+                    throw err; 
+                else{
+                    //var obj = JSON.parse(result)
+                    //console.log(result);
+                    res.send(result);
+                }
             }
         );
     }

@@ -3,6 +3,32 @@ getRandomIntInclusive = (min, max) => {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
 };
+
+getMilliSecondsPrototype = (time) => {
+    res = time.split(" ");
+    var hour = 1000*60*60;
+    var day = hour*24;
+    var month = day*30;
+    var year = month*12;
+    switch(res[0]){
+        case 'h':
+            return hour*parseInt(res[1]);
+            break;
+        case 'd':
+            return day*parseInt(res[1]);
+            break;
+        case 'm':
+            return month*parseInt(res[1]);
+            break;
+        case 'y':
+            return year*parseInt(res[1]);
+            break;
+        default:
+            return day*7;
+            break;
+    }
+}
+
 getMilliSeconds = (time) => {
 
     switch(time){
@@ -15,6 +41,8 @@ getMilliSeconds = (time) => {
         case '1 zi':
             return 1000*60*60*24;
             break;
+        case '2 zile':
+            return 
         case '7 zile':
             return 1000*60*60*24*7;
             break;
@@ -38,7 +66,7 @@ getMilliSeconds = (time) => {
 
 generateTrendingChart = (country,keyword,time) => {
     $.ajax({
-        url: "/trends/"+country+"/"+keyword+"/"+getMilliSeconds(time),
+        url: "/trends/"+country+"/"+keyword+"/"+getMilliSecondsPrototype(time),
         type:"get",
         dataType: "json",
         success: function(data){
@@ -82,9 +110,36 @@ generateTrendingChart = (country,keyword,time) => {
     
 }
 
-generateInterestOverTimeChart = (country,keyword) => {
-    //createInterestOverTimeGraph
-    graphs.createInterestOverTimeGraph();
+generateInterestOverTimeChart = (country,keyword,time) => {
+    $.ajax({
+        url: "/interest/"+country+"/"+keyword+"/"+getMilliSecondsPrototype(time)+"/"+0,
+        type:"GET",
+        dataType: "JSON",
+        success: function(data){
+            var array = data.default.timelineData;
+            console.log(array);
+            dataPoints = {
+                labels: [],
+                data: []
+            }
+
+            for (var i = 0; i < array.length; i++) {
+                if(array[i].value[0] == 0 )
+                    continue;
+        
+                dataPoints.labels.push(array[i].formattedAxisTime);
+                dataPoints.data.push(array[i].value[0]);
+            }
+
+            
+            var cluster = {
+                title:`Interest over time in ${country}`,
+                dataPoints: dataPoints
+            }
+            graphs.createInterestOverTimeGraph(cluster);
+        }
+    });
+
 }
 
 initiateData = (country,keyword,time) => {
@@ -98,7 +153,7 @@ updateCharts = (country, keyword, time) => {
     /*****  FOR ITRENDING PER STATE  *****/
     $.ajax({
         type: 'GET',
-        url: '/trends/' + country + "/" + keyword + "/" + getMilliSeconds(time),
+        url: '/trends/' + country + "/" + keyword + "/" + getMilliSecondsPrototype(time),
         success: (data) => {
             //console.log(data);
             backColors = [];
@@ -122,8 +177,8 @@ updateCharts = (country, keyword, time) => {
                 //'rgba(255, 99, 132, 0.3)'
             }
 
-            console.log(backColors);
-            console.log(dataPoints);
+            // console.log(backColors);
+            // console.log(dataPoints);
             
             var cluster1 = {
                 container : 'trendingChart',
@@ -137,14 +192,34 @@ updateCharts = (country, keyword, time) => {
         dataType: 'JSON'
     });
     /*****  FOR INTEREST OVER TIME  *****/
-    // $.ajax({
-    //     type: 'GET',
-    //     url: '/trends/' + country + "/" +keyword,
-    //     success: (data) => {
-    //         console.log(data);
-    //     },
-    //     dataType: 'JSON'
-    // });
+    $.ajax({
+        type: 'GET',
+        url: "/interest/"+country+"/"+keyword+"/"+getMilliSecondsPrototype(time)+"/"+0,
+        dataType: 'JSON',
+        success: (data) => {
+            var array = data.default.timelineData;
+            console.log(array);
+            dataPoints = {
+                labels: [],
+                data: []
+            }
+
+            for (var i = 0; i < array.length; i++) {
+                if(array[i].value[0] == 0 )
+                    continue;
+        
+                dataPoints.labels.push(array[i].formattedAxisTime);
+                dataPoints.data.push(array[i].value[0]);
+            }
+
+
+            var cluster = {
+                title:`Interest over time in ${country}`,
+                dataPoints: dataPoints
+            }
+            graphs.updateInterestOverTimeGraph(cluster);
+        },
+    });
 
 }
 
