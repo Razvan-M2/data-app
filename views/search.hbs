@@ -6,14 +6,14 @@
 
 <label for="countries" style="margin-top:100px;">Choose a country:</label>
     <select class="form-control search-control" name="countries" id="countries">
-</select>
+    </select>
 
 <label for="time" style="margin-top:100px;">Choose an interval of time:</label>
 <select class="form-control search-control" name="time" id="time">
     {{!-- <option value = "h 1" >Ultima ora</option>
     <option value = "h 4" >Ultimele 4 ore</option> --}}
     <option value = "d 3" >Ultimele 3 zile</option>
-    <option value = "d 9" >Ultimele 7 zile</option>
+    <option value = "d 7" >Ultimele 7 zile</option>
     <option value = "d 30" >Ultimele 30 de zile</option>
     <option value = "d 90" >Ultimele 90 de zile</option>
     <option value = "m 12" >Ultimele 12 luni</option>    
@@ -26,7 +26,9 @@
 
 
 <div id="panelData">
-    
+
+    <div id="divDik"></div>
+
     <canvas id="chart1" class="canvas-chart"></canvas>
 
     <canvas id="chart2" class="canvas-chart"></canvas>
@@ -49,7 +51,10 @@
         }
         });
 
-        $("#countries").val("Romania");
+        //$("#countries").val("Romania");
+        $("#countries").attr("value","Romania");
+        $("#countries").text("Romania");
+        $("#time").val("d 7");
         
         initiateData("Romania",$('#keyInput').val(),"d 7");
 

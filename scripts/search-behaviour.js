@@ -122,6 +122,7 @@ generateInterestOverTimeChart = (country,keyword,time) => {
                 labels: [],
                 data: []
             }
+            var backgroundColor,borderColor;
 
             for (var i = 0; i < array.length; i++) {
                 if(array[i].value[0] == 0 )
@@ -133,8 +134,10 @@ generateInterestOverTimeChart = (country,keyword,time) => {
 
             
             var cluster = {
-                title:`Interest over time in ${country}`,
-                dataPoints: dataPoints
+                title:`Interest over time in ${$('#countries').val()}`,
+                dataPoints: dataPoints,
+                backgroundColor:('rgba('+getRandomIntInclusive(0, 255)+','+getRandomIntInclusive(0, 255)+','+getRandomIntInclusive(0, 255)+','+0.1+')'),
+                borderColor:('rgba('+getRandomIntInclusive(0, 255)+','+getRandomIntInclusive(0, 255)+','+getRandomIntInclusive(0, 255)+','+0.3+')')
             }
             graphs.createInterestOverTimeGraph(cluster);
         }
@@ -215,7 +218,9 @@ updateCharts = (country, keyword, time) => {
 
             var cluster = {
                 title:`Interest over time in ${country}`,
-                dataPoints: dataPoints
+                dataPoints: dataPoints,
+                backgroundColor:('rgba('+getRandomIntInclusive(0, 255)+','+getRandomIntInclusive(0, 255)+','+getRandomIntInclusive(0, 255)+','+0.1+')'),
+                borderColor:('rgba('+getRandomIntInclusive(0, 255)+','+getRandomIntInclusive(0, 255)+','+getRandomIntInclusive(0, 255)+','+0.3+')')
             }
             graphs.updateInterestOverTimeGraph(cluster);
         },
@@ -233,8 +238,14 @@ handleSearch = () => {
 
 $(document).ready(()=>{
 
-    $('#keyInput').bind("enterKey",function(e){
-        handleSearch();
+    // $('#keyInput').bind("enterKey",function(e){
+    //     handleSearch();
+    // });
+
+    $("#keyInput").on('keyup', function (e) {
+        if (e.keyCode === 13) {
+            handleSearch();
+        }
     });
 
 
