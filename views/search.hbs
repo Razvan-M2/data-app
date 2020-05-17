@@ -1,26 +1,32 @@
 <div id="panelSearch">
 
-<div class="input-group mb-3" style="width:70%;margin-left:15%;margin-right:15%;margin-top:100px;">
-    <input id="keyInput" type="text" class="form-control search-control" placeholder="Enter a keyword" aria-label="Username" aria-describedby="basic-addon1" value={{searchedKeyword}}>
-</div>
 
-<label for="countries" style="margin-top:100px;">Choose a country:</label>
-    <select class="form-control search-control" name="countries" id="countries">
+
+<div class="card coco" style="width:75%; heigth:80%; margin-left:10%; margin-right:15%;margin-top:15%;">
+
+    <div class="input-group mb-3 " style="width:70%;margin-left:15%;margin-right:15%;margin-top:15%;">
+        <input id="keyInput" type="text" class="form-control search-control" placeholder="Enter a keyword" aria-label="Username" aria-describedby="basic-addon1" value={{searchedKeyword}}>
+    </div>
+
+
+    <label for="countries" style="margin-top:15%;margin-left:15%;">Choose a country:</label>
+        <select class="form-control search-control" name="countries" id="countries">
+        </select>
+
+    <label for="time" style="margin-top:15%; margin-left:15%;">Choose an interval of time:</label>
+    <select class="form-control search-control"  style="margin-bottom:15%;"name="time" id="time">
+        {{!-- <option value = "h 1" >Ultima ora</option>
+        <option value = "h 4" >Ultimele 4 ore</option> --}}
+        <option value = "d 3" >Ultimele 3 zile</option>
+        <option value = "d 7" >Ultimele 7 zile</option>
+        <option value = "d 30" >Ultimele 30 de zile</option>
+        <option value = "d 90" >Ultimele 90 de zile</option>
+        <option value = "m 12" >Ultimele 12 luni</option>    
+        <option value = "y 5" >Ultimii 5 ani</option>
+        <option value = "y 16" > Ultimii 16 ani</option>
     </select>
 
-<label for="time" style="margin-top:100px;">Choose an interval of time:</label>
-<select class="form-control search-control" name="time" id="time">
-    {{!-- <option value = "h 1" >Ultima ora</option>
-    <option value = "h 4" >Ultimele 4 ore</option> --}}
-    <option value = "d 3" >Ultimele 3 zile</option>
-    <option value = "d 7" >Ultimele 7 zile</option>
-    <option value = "d 30" >Ultimele 30 de zile</option>
-    <option value = "d 90" >Ultimele 90 de zile</option>
-    <option value = "m 12" >Ultimele 12 luni</option>    
-    <option value = "y 5" >Ultimii 5 ani</option>
-    <option value = "y 16" > Ultimii 16 ani</option>
-</select>
-
+    </div>
 </div>
 
 
