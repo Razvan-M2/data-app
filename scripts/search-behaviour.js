@@ -121,7 +121,7 @@ updateCharts = (country, keyword, time) => {
                 bordColors.push('rgba('+one+','+two+','+three+','+1+')');
                 //'rgba(255, 99, 132, 0.3)'
             }
-
+            console.log("Atatea date"+data.length +"si aterea culori"+bordColors.length);
             console.log(backColors);
             console.log(dataPoints);
             
