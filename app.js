@@ -53,6 +53,19 @@ app.use('/typing/:token', (req,res) => {
     googleAPI.getAutocomplete(req.params.token,res);
 });
 
+app.use('/interest/:country/:keyword/:startTime/:endTime', (req,res) => {
+    var startTime = req.params.startTime;
+    var endTime = req.params.endTime;
+    var country = req.params.country;
+    var keyword = req.params.keyword;
+    var delay=(1000*60*60*24*2);
+    googleAPI.getInterestOverTime({keyword:keyword,
+                                   country:country,
+                                   startTime: new Date(Date.now()-startTime),
+                                   endTime: new Date(Date.now()+delay)},res);
+});
+
+
 app.get('/allCountries',(req,res) =>{
     res.send(utilityAPI.countriesAPI.getCountriesNameList());
 });
