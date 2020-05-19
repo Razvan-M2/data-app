@@ -154,6 +154,8 @@ initiateData = (country,keyword,time) => {
 
 updateCharts = (country, keyword, time) => {
     /*****  FOR ITRENDING PER STATE  *****/
+    console.log(keyword);
+
     $.ajax({
         type: 'GET',
         url: '/trends/' + country + "/" + keyword + "/" + getMilliSecondsPrototype(time),
@@ -236,7 +238,7 @@ handleSearch = () => {
 }
 
 searchBySuggestions = (value) => {
-    var keyword = value.find("span").find("strong").text();
+    var keyword = value.find("span").text();
     $('#keyInput').val(keyword);
     $('.suggestion').remove();
     handleSearch();
@@ -249,9 +251,7 @@ generateSuggestions = (data) => {
 
     var html = data.map((val,index) => {
         return `<div class='card card-body suggestion' onclick='searchBySuggestions($(this))'>
-                    <span style='margin-bottom:5px;'>
-                        <strong>${val.title}</strong>
-                    </span>
+                    <span style='margin-bottom:5px;'>${val.title}</span>
                 </div>`
     });
     console.log(html);
@@ -306,11 +306,8 @@ $(document).ready(()=>{
     }); 
 
     $('#keyInput').focusin( ()=>{
+        //$('#keyInput').attr("style","border-bottom-right-radius:0px;border-bottom-left-radius:0px;");
         inputData();
     });
-   // $('#keyInput').input(()=>{
-
-
-    //})
 
 });

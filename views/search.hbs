@@ -17,8 +17,9 @@
 
 
     <label for="countries" style="margin-top:15%;margin-left:15%;">Choose a country:</label>
-        <select class="form-control search-control" name="countries" id="countries">
-        </select>
+        <input class="form-control search-control" type="text" id="countries" list="countriesList"/>
+        <datalist   name="countries" id="countriesList" style="max-width:70%">
+        </datalist >
 
     <label for="time" style="margin-top:15%; margin-left:15%;">Choose an interval of time:</label>
     <select class="form-control search-control"  style="margin-bottom:15%;"name="time" id="time">
@@ -59,8 +60,14 @@
         dataType: "json",
         success: function(data){
             data.forEach((item) => {
-                    var obj = `<option value="${item}">${item}</option>`;
-                    $('#countries').append(obj);});
+                if(item.length>30){
+                    var text = item.substring(0,25) + "...";
+                } else {
+                    var text = item;
+                }
+                    //var obj = `<option value="${item}">${text}</option>`;
+                    var obj = `<option value="${item}">`;
+                    $('#countriesList').append(obj);});
         }
         });
 
