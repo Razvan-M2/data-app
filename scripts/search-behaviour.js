@@ -295,7 +295,19 @@ $(document).ready(()=>{
         handleSearch();
     });
 
+    // $('#keyInput').focusout( ()=>{
+    //     $('.suggestion').remove();
+    // });
+    $('html').click(function(e) {                    
+        if(!$(e.target).hasClass('search-control') )
+        {
+            $('.suggestion').remove();                
+        }
+    }); 
 
+    $('#keyInput').focusin( ()=>{
+        inputData();
+    });
    // $('#keyInput').input(()=>{
 
 

@@ -78,7 +78,7 @@ html,body{
 }
 
 .suggestion:hover{
-    background-color:rgb(240,240,240);
+    background-color:rgb(135,206,250);
 }
 
 /***********************/
@@ -123,7 +123,8 @@ html,body{
     margin-right:0px;
     width:70%;
     height: 115vh;
-    background-color: rgb(240,240,240); 
+    background-color: rgb(240,240,240);
+     
 }
 
 #suggestion-bar{
@@ -132,6 +133,7 @@ html,body{
     position:absolute;
     z-index:999;
 }
+
 /* 
 #keywordSubmit{
     width:100%;
