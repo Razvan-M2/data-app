@@ -117,7 +117,7 @@ generateInterestOverTimeChart = (country,keyword,time) => {
         dataType: "JSON",
         success: function(data){
             var array = data.default.timelineData;
-            console.log(array);
+            //console.log(array);
             dataPoints = {
                 labels: [],
                 data: []
@@ -235,12 +235,22 @@ handleSearch = () => {
     updateCharts(selected_country,keyword,time);
 }
 
+inputData = () =>{
+    var keyword = $('#keyInput').val();
+    if(keyword.length>0){
+        $.ajax({
+            url:'/typing/'+keyword,
+            type:'GET',
+            dataType:'JSON',
+            success: (data) => {
+                console.log(data.default.topics);
+            }
+        });
+    }
+
+}
 
 $(document).ready(()=>{
-
-    // $('#keyInput').bind("enterKey",function(e){
-    //     handleSearch();
-    // });
 
     $("#keyInput").on('keyup', function (e) {
         if (e.keyCode === 13) {
@@ -256,4 +266,10 @@ $(document).ready(()=>{
     $('#time').change( () => {
         handleSearch();
     });
+
+   // $('#keyInput').input(()=>{
+
+
+    //})
+
 });
