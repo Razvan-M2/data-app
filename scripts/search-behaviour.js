@@ -235,18 +235,46 @@ handleSearch = () => {
     updateCharts(selected_country,keyword,time);
 }
 
+searchBySuggestions = (value) => {
+    var keyword = value.find("span").find("strong").text();
+    $('#keyInput').val(keyword);
+    $('.suggestion').remove();
+    handleSearch();
+}
+
+generateSuggestions = (data) => {
+
+    $('.suggestion').remove();
+    console.log(data);
+
+    var html = data.map((val,index) => {
+        return `<div class='card card-body suggestion' onclick='searchBySuggestions($(this))'>
+                    <span style='margin-bottom:5px;'>
+                        <strong>${val.title}</strong>
+                    </span>
+                </div>`
+    });
+    console.log(html);
+    html.forEach((val,index)=>{
+        $('#suggestion-bar').append(val);
+    });
+}
+
 inputData = () =>{
     var keyword = $('#keyInput').val();
+    $('.suggestion').remove();
     if(keyword.length>0){
         $.ajax({
             url:'/typing/'+keyword,
             type:'GET',
             dataType:'JSON',
             success: (data) => {
-                console.log(data.default.topics);
+                generateSuggestions(data.default.topics);
             }
         });
-    }
+    } 
+        
+    
 
 }
 
@@ -266,6 +294,7 @@ $(document).ready(()=>{
     $('#time').change( () => {
         handleSearch();
     });
+
 
    // $('#keyInput').input(()=>{
 
