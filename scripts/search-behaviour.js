@@ -145,16 +145,41 @@ generateInterestOverTimeChart = (country,keyword,time) => {
 
 }
 
+generateRelatedTopics = (country,keyword,time) => {
+    $.ajax({
+        url: "/topics/"+country+"/"+keyword+"/"+getMilliSecondsPrototype(time)+"/"+0,
+        type:"GET",
+        dataType: "JSON",
+        success: function(data){
+            console.log("These are RELATED TOPICS:");
+            console.log(data.default.rankedList);
+        }
+    });
+}
+
+generateRelatedQueries = (country,keyword,time) => {
+    $.ajax({
+        url: "/queries/"+country+"/"+keyword+"/"+getMilliSecondsPrototype(time)+"/"+0,
+        type:"GET",
+        dataType: "JSON",
+        success: function(data){
+            console.log("These are RELATED QUERIES:");
+            console.log(data.default.rankedList);
+        }
+    });
+}
+
 initiateData = (country,keyword,time) => {
 
     generateTrendingChart(country,keyword,time);
     generateInterestOverTimeChart(country,keyword,time);
-
+    generateRelatedTopics(country,keyword,time);
+    generateRelatedQueries(country,keyword,time);
 }
 
 updateCharts = (country, keyword, time) => {
     /*****  FOR ITRENDING PER STATE  *****/
-    console.log(keyword);
+    //console.log(keyword);
 
     $.ajax({
         type: 'GET',
@@ -227,7 +252,26 @@ updateCharts = (country, keyword, time) => {
             graphs.updateInterestOverTimeGraph(cluster);
         },
     });
-
+    /*****  Getting RELATED QUERIES  *****/
+    $.ajax({
+        url: "/queries/"+country+"/"+keyword+"/"+getMilliSecondsPrototype(time)+"/"+0,
+        type:"GET",
+        dataType: "JSON",
+        success: function(data){
+            console.log("These are RELATED QUERIES UPDATED:");
+            console.log(data.default.rankedList);
+        }
+    });
+    /*****  Getting RELATED TOPICS  *****/
+    $.ajax({
+        url: "/topics/"+country+"/"+keyword+"/"+getMilliSecondsPrototype(time)+"/"+0,
+        type:"GET",
+        dataType: "JSON",
+        success: function(data){
+            console.log("These are RELATED TOPICS UPDATED:");
+            console.log(data.default.rankedList);
+        }
+    });
 }
 
 handleSearch = () => {
@@ -247,14 +291,14 @@ searchBySuggestions = (value) => {
 generateSuggestions = (data) => {
 
     $('.suggestion').remove();
-    console.log(data);
+    //console.log(data);
 
     var html = data.map((val,index) => {
         return `<div class='card card-body suggestion' onclick='searchBySuggestions($(this))'>
                     <span style='margin-bottom:5px;'>${val.title}</span>
                 </div>`
     });
-    console.log(html);
+    //console.log(html);
     html.forEach((val,index)=>{
         $('#suggestion-bar').append(val);
     });
@@ -278,6 +322,48 @@ inputData = () =>{
 
 }
 
+/***    In home page     */
+
+searchBySuggestionsHome = (value) => {
+    var keyword = value.find("span").text();
+    $('#keyInputHome').val(keyword);
+    $('.suggestion').remove();
+    $('.search').submit();
+}
+
+generateSuggestionsHome = (data) => {
+
+    $('.suggestion').remove();
+
+    var html = data.map((val,index) => {
+        return `<div class='card card-body suggestion' onclick='searchBySuggestionsHome($(this))' style='width:100%;margin-left:0px;margin-right:0px;'>
+                    <span style='margin-bottom:5px;'>${val.title}</span>
+                </div>`
+    });
+    html.forEach((val,index)=>{
+        $('#suggestion-bar').append(val);
+    });
+}
+
+inputDataHome = () =>{
+    var keyword = $('#keyInputHome').val();
+    $('.suggestion').remove();
+    if(keyword.length>0){
+        $.ajax({
+            url:'/typing/'+keyword,
+            type:'GET',
+            dataType:'JSON',
+            success: (data) => {
+                generateSuggestionsHome(data.default.topics);
+            }
+        });
+    } 
+        
+    
+
+}
+
+
 $(document).ready(()=>{
 
     $("#keyInput").on('keyup', function (e) {
@@ -295,9 +381,6 @@ $(document).ready(()=>{
         handleSearch();
     });
 
-    // $('#keyInput').focusout( ()=>{
-    //     $('.suggestion').remove();
-    // });
     $('html').click(function(e) {                    
         if(!$(e.target).hasClass('search-control') )
         {
@@ -310,4 +393,8 @@ $(document).ready(()=>{
         inputData();
     });
 
+    $('#keyInputHome').focusin( ()=>{
+        //$('#keyInput').attr("style","border-bottom-right-radius:0px;border-bottom-left-radius:0px;");
+        inputDataHome();
+    });
 });

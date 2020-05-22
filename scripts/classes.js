@@ -41,13 +41,13 @@ class GraphCollection{
                 },
             })
         }
-        console.log(this.#trendingGraph.chart.canvas);
+        //console.log(this.#trendingGraph.chart.canvas);
         this.#trendingGraph.chart.canvas.style.height = "50vh";
         this.#trendingGraph.chart.canvas.style.width = '70%';
 
     }
     updateTrendingChart = (cluster) => {
-        console.log(cluster);
+        //console.log(cluster);
         this.#trendingGraph.chart.data.datasets[0].label = `Trending rate of the searched keyword by counties`;
         this.#trendingGraph.chart.data.labels = cluster.dataPoints.label;
         this.#trendingGraph.chart.data.datasets[0].data = cluster.dataPoints.data;
