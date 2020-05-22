@@ -288,14 +288,16 @@ searchBySuggestions = (value) => {
     handleSearch();
 }
 
+
 generateSuggestions = (data) => {
 
     $('.suggestion').remove();
-    //console.log(data);
+    console.log(data);
 
     var html = data.map((val,index) => {
         return `<div class='card card-body suggestion' onclick='searchBySuggestions($(this))'>
                     <span style='margin-bottom:5px;'>${val.title}</span>
+                    <span style='color:rgba(0,0,0,0.54);'>${val.type}</span>
                 </div>`
     });
     //console.log(html);
@@ -332,12 +334,13 @@ searchBySuggestionsHome = (value) => {
 }
 
 generateSuggestionsHome = (data) => {
-
+    console.log(data);
     $('.suggestion').remove();
 
     var html = data.map((val,index) => {
         return `<div class='card card-body suggestion' onclick='searchBySuggestionsHome($(this))' style='width:100%;margin-left:0px;margin-right:0px;'>
                     <span style='margin-bottom:5px;'>${val.title}</span>
+                    <span style='color:rgba(0,0,0,0.54);'>${val.type}</span>
                 </div>`
     });
     html.forEach((val,index)=>{
