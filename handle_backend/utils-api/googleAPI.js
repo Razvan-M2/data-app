@@ -41,6 +41,28 @@ module.exports = {
                 }
             }
         );
+    },
+
+    getRelatedQueries : function (cluster,res){
+        googleTrends.relatedTopics(cluster,
+            function(err,result){
+                if(err)
+                    throw err;
+                else{
+                    res.send(result);
+                }
+            })
+    },
+
+    getRelatedTopics : function (cluster,res){
+        googleTrends.relatedTopics(cluster,
+            function(err,result){
+                if(err)
+                    throw err;
+                else{
+                    res.send(result);
+                }
+            })
     }
     
 }

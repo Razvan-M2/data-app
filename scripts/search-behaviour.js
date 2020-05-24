@@ -117,7 +117,7 @@ generateInterestOverTimeChart = (country,keyword,time) => {
         dataType: "JSON",
         success: function(data){
             var array = data.default.timelineData;
-            console.log(array);
+            //console.log(array);
             dataPoints = {
                 labels: [],
                 data: []
@@ -145,15 +145,42 @@ generateInterestOverTimeChart = (country,keyword,time) => {
 
 }
 
+generateRelatedTopics = (country,keyword,time) => {
+    $.ajax({
+        url: "/topics/"+country+"/"+keyword+"/"+getMilliSecondsPrototype(time)+"/"+0,
+        type:"GET",
+        dataType: "JSON",
+        success: function(data){
+            console.log("These are RELATED TOPICS:");
+            console.log(data.default.rankedList);
+        }
+    });
+}
+
+generateRelatedQueries = (country,keyword,time) => {
+    $.ajax({
+        url: "/queries/"+country+"/"+keyword+"/"+getMilliSecondsPrototype(time)+"/"+0,
+        type:"GET",
+        dataType: "JSON",
+        success: function(data){
+            console.log("These are RELATED QUERIES:");
+            console.log(data.default.rankedList);
+        }
+    });
+}
+
 initiateData = (country,keyword,time) => {
 
     generateTrendingChart(country,keyword,time);
     generateInterestOverTimeChart(country,keyword,time);
-
+    generateRelatedTopics(country,keyword,time);
+    generateRelatedQueries(country,keyword,time);
 }
 
 updateCharts = (country, keyword, time) => {
     /*****  FOR ITRENDING PER STATE  *****/
+    //console.log(keyword);
+
     $.ajax({
         type: 'GET',
         url: '/trends/' + country + "/" + keyword + "/" + getMilliSecondsPrototype(time),
@@ -225,7 +252,26 @@ updateCharts = (country, keyword, time) => {
             graphs.updateInterestOverTimeGraph(cluster);
         },
     });
-
+    /*****  Getting RELATED QUERIES  *****/
+    $.ajax({
+        url: "/queries/"+country+"/"+keyword+"/"+getMilliSecondsPrototype(time)+"/"+0,
+        type:"GET",
+        dataType: "JSON",
+        success: function(data){
+            console.log("These are RELATED QUERIES UPDATED:");
+            console.log(data.default.rankedList);
+        }
+    });
+    /*****  Getting RELATED TOPICS  *****/
+    $.ajax({
+        url: "/topics/"+country+"/"+keyword+"/"+getMilliSecondsPrototype(time)+"/"+0,
+        type:"GET",
+        dataType: "JSON",
+        success: function(data){
+            console.log("These are RELATED TOPICS UPDATED:");
+            console.log(data.default.rankedList);
+        }
+    });
 }
 
 handleSearch = () => {
@@ -235,12 +281,93 @@ handleSearch = () => {
     updateCharts(selected_country,keyword,time);
 }
 
+searchBySuggestions = (value) => {
+    var keyword = value.find("span").text();
+    $('#keyInput').val(keyword);
+    $('.suggestion').remove();
+    handleSearch();
+}
+
+
+generateSuggestions = (data) => {
+
+    $('.suggestion').remove();
+    console.log(data);
+
+    var html = data.map((val,index) => {
+        return `<div class='card card-body suggestion' onclick='searchBySuggestions($(this))'>
+                    <span style='margin-bottom:5px;'>${val.title}</span>
+                    <span style='color:rgba(0,0,0,0.54);'>${val.type}</span>
+                </div>`
+    });
+    //console.log(html);
+    html.forEach((val,index)=>{
+        $('#suggestion-bar').append(val);
+    });
+}
+
+inputData = () =>{
+    var keyword = $('#keyInput').val();
+    $('.suggestion').remove();
+    if(keyword.length>0){
+        $.ajax({
+            url:'/typing/'+keyword,
+            type:'GET',
+            dataType:'JSON',
+            success: (data) => {
+                generateSuggestions(data.default.topics);
+            }
+        });
+    } 
+        
+    
+
+}
+
+/***    In home page     */
+
+searchBySuggestionsHome = (value) => {
+    var keyword = value.find("span").text();
+    $('#keyInputHome').val(keyword);
+    $('.suggestion').remove();
+    $('.search').submit();
+}
+
+generateSuggestionsHome = (data) => {
+    console.log(data);
+    $('.suggestion').remove();
+
+    var html = data.map((val,index) => {
+        return `<div class='card card-body suggestion' onclick='searchBySuggestionsHome($(this))' style='width:100%;margin-left:0px;margin-right:0px;'>
+                    <span style='margin-bottom:5px;'>${val.title}</span>
+                    <span style='color:rgba(0,0,0,0.54);'>${val.type}</span>
+                </div>`
+    });
+    html.forEach((val,index)=>{
+        $('#suggestion-bar').append(val);
+    });
+}
+
+inputDataHome = () =>{
+    var keyword = $('#keyInputHome').val();
+    $('.suggestion').remove();
+    if(keyword.length>0){
+        $.ajax({
+            url:'/typing/'+keyword,
+            type:'GET',
+            dataType:'JSON',
+            success: (data) => {
+                generateSuggestionsHome(data.default.topics);
+            }
+        });
+    } 
+        
+    
+
+}
+
 
 $(document).ready(()=>{
-
-    // $('#keyInput').bind("enterKey",function(e){
-    //     handleSearch();
-    // });
 
     $("#keyInput").on('keyup', function (e) {
         if (e.keyCode === 13) {
@@ -255,5 +382,22 @@ $(document).ready(()=>{
 
     $('#time').change( () => {
         handleSearch();
+    });
+
+    $('html').click(function(e) {                    
+        if(!$(e.target).hasClass('search-control') )
+        {
+            $('.suggestion').remove();                
+        }
+    }); 
+
+    $('#keyInput').focusin( ()=>{
+        //$('#keyInput').attr("style","border-bottom-right-radius:0px;border-bottom-left-radius:0px;");
+        inputData();
+    });
+
+    $('#keyInputHome').focusin( ()=>{
+        //$('#keyInput').attr("style","border-bottom-right-radius:0px;border-bottom-left-radius:0px;");
+        inputDataHome();
     });
 });

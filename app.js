@@ -58,11 +58,10 @@ app.use('/interest/:country/:keyword/:startTime/:endTime', (req,res) => {
     var endTime = req.params.endTime;
     var country = req.params.country;
     var keyword = req.params.keyword;
-    var delay=(1000*60*60*24*2);
     googleAPI.getInterestOverTime({keyword:keyword,
                                    country:country,
                                    startTime: new Date(Date.now()-startTime),
-                                   endTime: new Date(Date.now()+delay)},res);
+                                   endTime: new Date(Date.now())},res);
 });
 
 
@@ -70,5 +69,25 @@ app.get('/allCountries',(req,res) =>{
     res.send(utilityAPI.countriesAPI.getCountriesNameList());
 });
 
+app.use('/topics/:country/:keyword/:startTime/:endTime', (req,res) => {
+    var startTime = req.params.startTime;
+    var endTime = req.params.endTime;
+    var country = req.params.country;
+    var keyword = req.params.keyword;
+    googleAPI.getRelatedTopics({keyword:keyword,
+                                   country:country,
+                                   startTime: new Date(Date.now()-startTime),
+                                   endTime: new Date(Date.now())},res);
+});
 
+app.use('/queries/:country/:keyword/:startTime/:endTime', (req,res) => {
+    var startTime = req.params.startTime;
+    var endTime = req.params.endTime;
+    var country = req.params.country;
+    var keyword = req.params.keyword;
+    googleAPI.getRelatedQueries({keyword:keyword,
+                                   country:country,
+                                   startTime: new Date(Date.now()-startTime),
+                                   endTime: new Date(Date.now())},res);
+});
 module.exports = app;
