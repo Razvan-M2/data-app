@@ -392,7 +392,7 @@ inputData = () =>{
 /***    In home page     */
 
 searchBySuggestionsHome = (value) => {
-    var keyword = value.find("span").text();
+    var keyword = value[0].children[0].textContent;
     $('#keyInputHome').val(keyword);
     $('.suggestion').remove();
     $('.search').submit();

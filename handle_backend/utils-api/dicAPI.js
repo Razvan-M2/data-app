@@ -9,14 +9,21 @@ require('dotenv').config();
 
 var dictionary = new dictionaryAPI(process.env.APP_ID,process.env.APP_KEY);
 
+
+
 module.exports = {
 
     getTranslation: (keyword,res) => {
+        
         dictionary.find(keyword,(err,data) => {
+            try{
             if(err)
                 throw err;
             else{
                 res.send(data.results)
+            }
+            }catch{
+                console.log(err);
             }
         });
     }
