@@ -15,7 +15,7 @@ module.exports = {
         })
 
     },
-
+//iuliabapi
     getAutocomplete : function(text,res){
         
         googleTrends.autoComplete({keyword: text},function(err,result){
