@@ -1,3 +1,29 @@
+var colorsCod=[{
+    R:242,
+    G:27,
+    B:167
+},
+{
+    R:3, 
+    G:76,
+    B:140
+},
+{
+    R: 75,
+    G:147,
+    B:191
+},
+{
+    R:4, 
+    G:217,
+    B:96
+},
+{
+    R:64,
+    G:140,
+    B:62
+}];
+
 getRandomIntInclusive = (min, max) => {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -84,11 +110,14 @@ generateTrendingChart = (country,keyword,time) => {
         
                 dataPoints.label.push(data[i].geoName);
                 dataPoints.data.push(data[i].value[0]);
-                let one=getRandomIntInclusive(0, 255);
-                let two=getRandomIntInclusive(0, 255);
-                let three=getRandomIntInclusive(0, 255);
-                backColors.push('rgba('+one+','+two+','+three+','+0.3+')');
-                bordColors.push('rgba('+one+','+two+','+three+','+1+')');
+
+                backColors.push('rgba('+colorsCod[i%5].R+','+colorsCod[i%5].G+','+colorsCod[i%5].B+','+0.3+')');
+                bordColors.push('rgba('+colorsCod[i%5].R+','+colorsCod[i%5].G+','+colorsCod[i%5].B+','+1+')');
+                // let one=getRandomIntInclusive(0, 255);
+                // let two=getRandomIntInclusive(0, 255);
+                // let three=getRandomIntInclusive(0, 255);
+                // backColors.push('rgba('+one+','+two+','+three+','+0.3+')');
+                // bordColors.push('rgba('+one+','+two+','+three+','+1+')');
                 //'rgba(255, 99, 132, 0.3)'
             }
             
@@ -104,9 +133,6 @@ generateTrendingChart = (country,keyword,time) => {
             //graphs.initialize(cluster1);
         }
     });
-
-
-    
     
 }
 
@@ -136,8 +162,10 @@ generateInterestOverTimeChart = (country,keyword,time) => {
             var cluster = {
                 title:`Interest over time in ${$('#countries').val()}`,
                 dataPoints: dataPoints,
-                backgroundColor:('rgba('+getRandomIntInclusive(0, 255)+','+getRandomIntInclusive(0, 255)+','+getRandomIntInclusive(0, 255)+','+0.1+')'),
-                borderColor:('rgba('+getRandomIntInclusive(0, 255)+','+getRandomIntInclusive(0, 255)+','+getRandomIntInclusive(0, 255)+','+0.3+')')
+                backgroundColor:('rgba('+colorsCod[i%5].R+','+colorsCod[i%5].G+','+colorsCod[i%5].B+','+0.3+')'),
+                borderColor:('rgba('+colorsCod[i%5].R+','+colorsCod[i%5].G+','+colorsCod[i%5].B+','+1+')')
+                // backgroundColor:('rgba('+getRandomIntInclusive(0, 255)+','+getRandomIntInclusive(0, 255)+','+getRandomIntInclusive(0, 255)+','+0.1+')'),
+                // borderColor:('rgba('+getRandomIntInclusive(0, 255)+','+getRandomIntInclusive(0, 255)+','+getRandomIntInclusive(0, 255)+','+0.3+')')
             }
             graphs.createInterestOverTimeGraph(cluster);
         }
@@ -196,14 +224,17 @@ updateCharts = (country, keyword, time) => {
             for (var i = 0; i < data.length; i++) {
                 if(data[i].value[0] == 0 )
                     continue;
-        
-                dataPoints.label.push(data[i].geoName);
-                dataPoints.data.push(data[i].value[0]);
-                let one=getRandomIntInclusive(0, 255);
-                let two=getRandomIntInclusive(0, 255);
-                let three=getRandomIntInclusive(0, 255);
-                backColors.push('rgba('+one+','+two+','+three+','+0.3+')');
-                bordColors.push('rgba('+one+','+two+','+three+','+1+')');
+               
+                    backColors.push('rgba('+colorsCod[i%5].R+','+colorsCod[i%5].G+','+colorsCod[i%5].B+','+0.3+')');
+                    bordColors.push('rgba('+colorsCod[i%5].R+','+colorsCod[i%5].G+','+colorsCod[i%5].B+','+1+')');
+
+                // dataPoints.label.push(data[i].geoName);
+                // dataPoints.data.push(data[i].value[0]);
+                // let one=getRandomIntInclusive(0, 255);
+                // let two=getRandomIntInclusive(0, 255);
+                // let three=getRandomIntInclusive(0, 255);
+                // backColors.push('rgba('+one+','+two+','+three+','+0.3+')');
+                // bordColors.push('rgba('+one+','+two+','+three+','+1+')');
                 //'rgba(255, 99, 132, 0.3)'
             }
 
@@ -246,8 +277,10 @@ updateCharts = (country, keyword, time) => {
             var cluster = {
                 title:`Interest over time in ${country}`,
                 dataPoints: dataPoints,
-                backgroundColor:('rgba('+getRandomIntInclusive(0, 255)+','+getRandomIntInclusive(0, 255)+','+getRandomIntInclusive(0, 255)+','+0.1+')'),
-                borderColor:('rgba('+getRandomIntInclusive(0, 255)+','+getRandomIntInclusive(0, 255)+','+getRandomIntInclusive(0, 255)+','+0.3+')')
+                backgroundColor:('rgba('+colorsCod[i%5].R+','+colorsCod[i%5].G+','+colorsCod[i%5].B+','+0.3+')'),
+                borderColor:('rgba('+colorsCod[i%5].R+','+colorsCod[i%5].G+','+colorsCod[i%5].B+','+1+')')
+                // backgroundColor:('rgba('+getRandomIntInclusive(0, 255)+','+getRandomIntInclusive(0, 255)+','+getRandomIntInclusive(0, 255)+','+0.1+')'),
+                // borderColor:('rgba('+getRandomIntInclusive(0, 255)+','+getRandomIntInclusive(0, 255)+','+getRandomIntInclusive(0, 255)+','+0.3+')')
             }
             graphs.updateInterestOverTimeGraph(cluster);
         },
@@ -321,7 +354,6 @@ inputData = () =>{
     } 
         
     
-
 }
 
 /***    In home page     */
