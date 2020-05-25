@@ -92,7 +92,7 @@ app.use('/queries/:country/:keyword/:startTime/:endTime', (req,res) => {
 });
 
 app.use('/translate/:keyword',(req,res) => {
-    console.log(req.params.keyword);
+    //console.log(req.params.keyword);
     //res.send('You searched for'+req.params.keyword+". Data will be sent soon!");
 });
 module.exports = app;

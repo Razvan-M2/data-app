@@ -86,6 +86,12 @@ option{
     background-color:rgb(135,206,250);
 }
 
+.search-results-container{
+    background-color: white;
+    height:50vh;
+    width:70%;
+}
+
 /***********************/
 /**********ID***********/
 /***********************/
@@ -128,7 +134,7 @@ option{
     margin-left:30%;
     margin-right:0px;
     width:70%;
-    height: 115vh;
+    height: auto;
     background-color: rgb(240,240,240);
      
 }
@@ -140,6 +146,13 @@ option{
     z-index:999;
     margin-left:1%;
     margin-right:1%;
+}
+
+#title-dictionary{
+    
+}
+#content-dictionary{
+
 }
 
 /* 
