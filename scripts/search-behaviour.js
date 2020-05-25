@@ -283,7 +283,8 @@ handleSearch = () => {
 }
 
 searchBySuggestions = (value) => {
-    var keyword = value.find("span").text();
+    var keyword = value.span[0];
+    console.log(keyword);
     $('#keyInput').val(keyword);
     $('.suggestion').remove();
     handleSearch();
