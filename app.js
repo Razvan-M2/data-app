@@ -43,6 +43,7 @@ app.use('/trends/:country/:keyword/:time', (req,res) => {
     var time = req.params.time;
     var countryCode = utilityAPI.countriesAPI.getCountryCodeByName(req.params.country);
     var keyword = req.params.keyword;
+    console.log(keyword);
     utilityAPI.googleTrendsAPI.getTrends(  {keyword: keyword,
                                             startTime: new Date(Date.now() - time),
                                             geo:countryCode},
@@ -63,7 +64,6 @@ app.use('/interest/:country/:keyword/:startTime/:endTime', (req,res) => {
                                    startTime: new Date(Date.now()-startTime),
                                    endTime: new Date(Date.now())},res);
 });
-
 
 app.get('/allCountries',(req,res) =>{
     res.send(utilityAPI.countriesAPI.getCountriesNameList());
@@ -89,5 +89,10 @@ app.use('/queries/:country/:keyword/:startTime/:endTime', (req,res) => {
                                    country:country,
                                    startTime: new Date(Date.now()-startTime),
                                    endTime: new Date(Date.now())},res);
+});
+
+app.use('/translate/:keyword',(req,res) => {
+    console.log(req.params.keyword);
+    //res.send('You searched for'+req.params.keyword+". Data will be sent soon!");
 });
 module.exports = app;

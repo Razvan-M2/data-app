@@ -96,6 +96,7 @@ generateTrendingChart = (country,keyword,time) => {
         type:"get",
         dataType: "json",
         success: function(data){
+            //console.log("Here we have the data for trending in generation function:");
             //console.log(data);
             backColors = [];
             bordColors = [];
@@ -179,8 +180,8 @@ generateRelatedTopics = (country,keyword,time) => {
         type:"GET",
         dataType: "JSON",
         success: function(data){
-            console.log("These are RELATED TOPICS:");
-            console.log(data.default.rankedList);
+            //console.log("These are RELATED TOPICS:");
+            //console.log(data.default.rankedList);
         }
     });
 }
@@ -191,8 +192,22 @@ generateRelatedQueries = (country,keyword,time) => {
         type:"GET",
         dataType: "JSON",
         success: function(data){
-            console.log("These are RELATED QUERIES:");
-            console.log(data.default.rankedList);
+            //console.log("These are RELATED QUERIES:");
+            //console.log(data.default.rankedList);
+        }
+    });
+}
+
+generateDictionaryTranslation = (keyword) => {
+    /*****  Getting dictionary data  *****/
+    $.ajax({
+        url: "/translate/"+keyword,
+        type:"GET",
+        dataType: "JSON",
+        success: function(data){
+            console.log(data);
+            //console.log("These are RELATED TOPICS UPDATED:");
+            //console.log(data.default.rankedList);
         }
     });
 }
@@ -203,6 +218,7 @@ initiateData = (country,keyword,time) => {
     generateInterestOverTimeChart(country,keyword,time);
     generateRelatedTopics(country,keyword,time);
     generateRelatedQueries(country,keyword,time);
+    generateDictionaryTranslation(keyword);
 }
 
 updateCharts = (country, keyword, time) => {
@@ -213,7 +229,8 @@ updateCharts = (country, keyword, time) => {
         type: 'GET',
         url: '/trends/' + country + "/" + keyword + "/" + getMilliSecondsPrototype(time),
         success: (data) => {
-            //console.log(data);
+            // console.log("Here we have data from updating function!");
+            // console.log(data);
             backColors = [];
             bordColors = [];
             dataPoints = {
@@ -224,7 +241,10 @@ updateCharts = (country, keyword, time) => {
             for (var i = 0; i < data.length; i++) {
                 if(data[i].value[0] == 0 )
                     continue;
-               
+
+                    dataPoints.label.push(data[i].geoName);
+                    dataPoints.data.push(data[i].value[0]);
+
                     backColors.push('rgba('+colorsCod[i%5].R+','+colorsCod[i%5].G+','+colorsCod[i%5].B+','+0.3+')');
                     bordColors.push('rgba('+colorsCod[i%5].R+','+colorsCod[i%5].G+','+colorsCod[i%5].B+','+1+')');
 
@@ -248,6 +268,7 @@ updateCharts = (country, keyword, time) => {
                 backColors : backColors,
                 bordColors : bordColors
             }
+            //console.log(cluster1);
             graphs.updateTrendingChart(cluster1);
         },
         dataType: 'JSON'
@@ -259,7 +280,7 @@ updateCharts = (country, keyword, time) => {
         dataType: 'JSON',
         success: (data) => {
             var array = data.default.timelineData;
-            console.log(array);
+            //console.log(array);
             dataPoints = {
                 labels: [],
                 data: []
@@ -291,8 +312,8 @@ updateCharts = (country, keyword, time) => {
         type:"GET",
         dataType: "JSON",
         success: function(data){
-            console.log("These are RELATED QUERIES UPDATED:");
-            console.log(data.default.rankedList);
+            //console.log("These are RELATED QUERIES UPDATED:");
+            //console.log(data.default.rankedList);
         }
     });
     /*****  Getting RELATED TOPICS  *****/
@@ -301,8 +322,19 @@ updateCharts = (country, keyword, time) => {
         type:"GET",
         dataType: "JSON",
         success: function(data){
-            console.log("These are RELATED TOPICS UPDATED:");
-            console.log(data.default.rankedList);
+            //console.log("These are RELATED TOPICS UPDATED:");
+            //console.log(data.default.rankedList);
+        }
+    });
+    /*****  Getting dictionary data  *****/
+    $.ajax({
+        url: "/translate/"+keyword,
+        type:"GET",
+        dataType: "JSON",
+        success: function(data){
+            console.log(data);
+            //console.log("These are RELATED TOPICS UPDATED:");
+            //console.log(data.default.rankedList);
         }
     });
 }
@@ -316,18 +348,17 @@ handleSearch = () => {
 }
 
 searchBySuggestions = (value) => {
-    var keyword = value.span[0];
+    var keyword = value[0].children[0].textContent;
     console.log(keyword);
     $('#keyInput').val(keyword);
     $('.suggestion').remove();
     handleSearch();
 }
 
-
 generateSuggestions = (data) => {
 
     $('.suggestion').remove();
-    console.log(data);
+    //console.log(data);
 
     var html = data.map((val,index) => {
         return `<div class='card card-body suggestion' onclick='searchBySuggestions($(this))'>

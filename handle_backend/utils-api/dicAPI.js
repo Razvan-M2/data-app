@@ -11,7 +11,7 @@ var dictionary = new dictionaryAPI(process.env.APP_ID,process.env.APP_KEY);
 
 module.exports = {
 
-    getData: (keyword,res) => {
+    getTranslation: (keyword,res) => {
         dictionary.find(keyword,(err,data) => {
             if(err)
                 throw err;
