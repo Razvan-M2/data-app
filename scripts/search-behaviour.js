@@ -278,7 +278,8 @@ handleSearch = () => {
     var selected_country = $('#countries').val();
     var keyword = $('#keyInput').val();
     var time = $('#time').val();
-    updateCharts(selected_country,keyword,time);
+    if(selected_country.length>0 && keyword.length>0 && time.length>0)
+        updateCharts(selected_country,keyword,time);
 }
 
 searchBySuggestions = (value) => {
