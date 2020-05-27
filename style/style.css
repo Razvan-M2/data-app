@@ -90,6 +90,32 @@ option{
     background-color: white;
     height:50vh;
     width:70%;
+    overflow-y: scroll;
+}
+
+.definition-word-definition{
+    font-weight: bold;
+    display:block;
+}
+
+.definition-word-body{
+    padding:15px;
+    background-color: rgb(220,220,220);
+    border-radius:5px;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+.definition-word-example{
+    display:block;
+    padding:7px;
+}
+
+.definition-word-category{
+    padding-bottom:5px;
+    display: block;
+    font-weight:bold;
+    text-decoration: underline;
 }
 
 /***********************/
@@ -130,6 +156,7 @@ option{
 }
 
 #panelData{
+    
     float:left;
     margin-left:30%;
     margin-right:0px;
@@ -149,10 +176,11 @@ option{
 }
 
 #title-dictionary{
-    
-}
-#content-dictionary{
-
+    padding:15px;
+    background-color: rgb(220,220,220);
+    border-radius:5px;
+    margin-top:10px;
+    margin-bottom:10px;
 }
 
 /* 

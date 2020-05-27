@@ -93,8 +93,9 @@ app.use('/queries/:country/:keyword/:startTime/:endTime', (req,res) => {
 
 app.use('/translate/:keyword',(req,res) => {
     //console.log(req.params.keyword);
-    //var keyword = req.params.keyword;
-    //utilityAPI.dictionaryAPI.getTranslation(`${keyword}`,res);
-    res.send('Nothing here');
+    var keyword = req.params.keyword;
+    
+    utilityAPI.dictionaryAPI.getTranslation(keyword,res);
+    //res.send('Nothing here');
 });
 module.exports = app;

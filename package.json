@@ -25,6 +25,6 @@
     "mongo-client": "^0.2.1",
     "mongoose": "^5.9.11",
     "nodemon": "^2.0.4",
-    "oxford-dictionary-api": "^1.0.1"
+    "oxford-dictionary": "^1.6.0"
   }
 }

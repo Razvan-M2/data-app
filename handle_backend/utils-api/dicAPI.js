@@ -1,30 +1,65 @@
-const dictionaryAPI = require('oxford-dictionary-api');
-require('dotenv').config();
+const dictionaryAPI = require('oxford-dictionary');
 
-// var config = {
-//     app_id : process.env.APP_ID,
-//     app_key : process.env.APP_KEY,
-//     source_lang : "en-us"
-//   };
-
-var dictionary = new dictionaryAPI(process.env.APP_ID,process.env.APP_KEY);
+var config = {
+    app_id : "4740715f",
+    app_key : "d153ff8eafb8b6d5da05bb266eac50ee",
+    source_lang : "en-us"
+  };
+var dictionary = new dictionaryAPI(config);
 
 
 
 module.exports = {
 
-    getTranslation: (keyword,res) => {
+    getTranslation: (keyword,response) => {
         
-        dictionary.find(keyword,(err,data) => {
+        let definitions = {},pronunciations = {},examples = {}, categories;
+        
+
+        var define = dictionary.definitions(keyword);
+        var pronounce = dictionary.pronunciations(keyword);
+        var exemplify = dictionary.examples(keyword);
+
+        define.then((def) => {
+            definitions = def;
+            pronounce.then((pron) => {
+                pronunciations = pron;
+                exemplify.then((exem)=>{
+                    examples = exem;
+                    response.send({ keyword:keyword,
+                                    def:definitions.results[0].lexicalEntries,
+                                    pronon:pronunciations.results[0].lexicalEntries,
+                                    exem:examples.results[0].lexicalEntries});
+                },(err)=>{
+                    try{
+                        if(err)
+                            throw err;
+                    }
+                    catch(err){
+                        console.log("Error in finding the word examples");
+                        console.log(err);
+                    }
+                })
+            },(err) => {
+                try{
+                    if(err)
+                        throw err;
+                }
+                catch(err){
+                    console.log("Error in finding the word pronunciations");
+                    console.log(err);
+                }
+            })
+        },(err) => {
             try{
-            if(err)
-                throw err;
-            else{
-                res.send(data.results)
+                if(err)
+                    throw err;
             }
-            }catch{
+            catch(err){
+                console.log("Error in defining the word!");
                 console.log(err);
             }
+            
         });
     }
 

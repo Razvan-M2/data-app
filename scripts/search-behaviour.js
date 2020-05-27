@@ -96,8 +96,7 @@ generateTrendingChart = (country,keyword,time) => {
         type:"get",
         dataType: "json",
         success: function(data){
-            //console.log("Here we have the data for trending in generation function:");
-            //console.log(data);
+            //Here we have the data for trending in generation function
             backColors = [];
             bordColors = [];
             dataPoints = {
@@ -144,7 +143,6 @@ generateInterestOverTimeChart = (country,keyword,time) => {
         dataType: "JSON",
         success: function(data){
             var array = data.default.timelineData;
-            //console.log(array);
             dataPoints = {
                 labels: [],
                 data: []
@@ -198,6 +196,70 @@ generateRelatedQueries = (country,keyword,time) => {
     });
 }
 
+createDictionaryContainerContent = (definitions,examples,pronunciations) => {
+
+    var builder = "";
+    var count;
+    for(var primaryIndex = 0;   primaryIndex<definitions.length && 
+                                primaryIndex<examples.length &&
+                                primaryIndex<pronunciations.length; primaryIndex++){
+                builder+=`<div class="definition-word-body">
+                                <span class="definition-word-category">${   definitions[primaryIndex].lexicalCategory.charAt(0).toUpperCase()+
+                                                                            definitions[primaryIndex].lexicalCategory.slice(1)}</span>`;
+                count = 1;
+        for(var contentIndex = 0;   contentIndex<definitions[primaryIndex].content.length &&
+                                    contentIndex<examples[primaryIndex].content.length; contentIndex++){
+                    if(definitions[primaryIndex].content[contentIndex]!=null && examples[primaryIndex].content[contentIndex]){    
+
+                builder += `<span class="definition-word-definition" >${count})${definitions[primaryIndex].content[contentIndex].charAt(0).toUpperCase()
+                                                                        +definitions[primaryIndex].content[contentIndex].slice(1)}</span>
+                            <i><span class="definition-word-example">"${   examples[primaryIndex].content[contentIndex].charAt(0).toUpperCase()+
+                                                                        examples[primaryIndex].content[contentIndex].slice(1)}"</span></i>`;
+                            count++;
+                    }
+        }
+            builder+=`</div>`
+    }
+    return builder;
+}
+
+insertDictionaryData = (data) => {
+    var container = document.getElementsByClassName('search-results-container');
+    var htmlTitle = `   <div id="title-dictionary">
+                            <span id="title-dictionary-content" >${data.keyword.charAt(0).toUpperCase() + data.keyword.slice(1)}</span>
+                        </div>`;
+    var definitions = [];
+    var examples = [];
+    var pronunciations = [];
+
+    if(data.def[0].entries!=null){
+        data.def.forEach((primaryItem,primaryIndex)=>{
+            definitions[primaryIndex]= {    lexicalCategory:primaryItem.lexicalCategory.text,
+                                            content:[] };
+            primaryItem.entries[0].senses.forEach((secondaryItem,secondaryIndex)=>{
+                if(secondaryItem.definitions!=null)
+                    definitions[primaryIndex].content.push(secondaryItem.definitions[0]);
+            })
+        });
+    }
+    
+    if(data.exem[0].entries!=null){
+        data.exem.forEach((primaryItem,primaryIndex)=>{
+            examples[primaryIndex]= {   lexicalCategory:primaryItem.lexicalCategory.text,
+                                        content:[]  };
+            primaryItem.entries[0].senses.forEach((secondaryItem,secondaryIndex)=>{
+                if(secondaryItem.examples!=null)
+                    examples[primaryIndex].content.push(secondaryItem.examples[0].text)})
+        });
+    }
+    data.pronon.forEach((primaryItem,index)=>{
+        pronunciations.push({   phoneticsSpelling:primaryItem.entries[0].pronunciations[0].phoneticSpelling,
+                                audioFile:primaryItem.entries[0].pronunciations[1].audioFile})
+    });
+    var htmlBody = createDictionaryContainerContent(definitions,examples,pronunciations);
+    container[0].innerHTML = htmlTitle + htmlBody; 
+}
+
 generateDictionaryTranslation = (keyword) => {
     /*****  Getting dictionary data  *****/
     $.ajax({
@@ -205,9 +267,8 @@ generateDictionaryTranslation = (keyword) => {
         type:"GET",
         dataType: "JSON",
         success: function(data){
-            console.log(data);
-            //console.log("These are RELATED TOPICS UPDATED:");
-            //console.log(data.default.rankedList);
+            //  Added the dictionary API
+            insertDictionaryData(data);
         }
     });
 }
@@ -218,7 +279,7 @@ initiateData = (country,keyword,time) => {
     generateInterestOverTimeChart(country,keyword,time);
     generateRelatedTopics(country,keyword,time);
     generateRelatedQueries(country,keyword,time);
-    generateDictionaryTranslation(keyword);
+    //generateDictionaryTranslation(keyword);
 }
 
 updateCharts = (country, keyword, time) => {
@@ -230,7 +291,6 @@ updateCharts = (country, keyword, time) => {
         url: '/trends/' + country + "/" + keyword + "/" + getMilliSecondsPrototype(time),
         success: (data) => {
             // console.log("Here we have data from updating function!");
-            // console.log(data);
             backColors = [];
             bordColors = [];
             dataPoints = {
@@ -257,9 +317,6 @@ updateCharts = (country, keyword, time) => {
                 // bordColors.push('rgba('+one+','+two+','+three+','+1+')');
                 //'rgba(255, 99, 132, 0.3)'
             }
-
-            // console.log(backColors);
-            // console.log(dataPoints);
             
             var cluster1 = {
                 container : 'trendingChart',
@@ -268,7 +325,6 @@ updateCharts = (country, keyword, time) => {
                 backColors : backColors,
                 bordColors : bordColors
             }
-            //console.log(cluster1);
             graphs.updateTrendingChart(cluster1);
         },
         dataType: 'JSON'
@@ -280,7 +336,6 @@ updateCharts = (country, keyword, time) => {
         dataType: 'JSON',
         success: (data) => {
             var array = data.default.timelineData;
-            //console.log(array);
             dataPoints = {
                 labels: [],
                 data: []
@@ -327,16 +382,15 @@ updateCharts = (country, keyword, time) => {
         }
     });
     /*****  Getting dictionary data  *****/
-    $.ajax({
-        url: "/translate/"+keyword,
-        type:"GET",
-        dataType: "JSON",
-        success: function(data){
-            console.log(data);
-            //console.log("These are RELATED TOPICS UPDATED:");
-            //console.log(data.default.rankedList);
-        }
-    });
+    // $.ajax({
+    //     url: "/translate/"+keyword,
+    //     type:"GET",
+    //     dataType: "JSON",
+    //     success: function(data){
+    //         console.log(data);
+    //         insertDictionaryData(data);
+    //     }
+    // });
 }
 
 handleSearch = () => {
@@ -349,7 +403,6 @@ handleSearch = () => {
 
 searchBySuggestions = (value) => {
     var keyword = value[0].children[0].textContent;
-    console.log(keyword);
     $('#keyInput').val(keyword);
     $('.suggestion').remove();
     handleSearch();
@@ -358,7 +411,6 @@ searchBySuggestions = (value) => {
 generateSuggestions = (data) => {
 
     $('.suggestion').remove();
-    //console.log(data);
 
     var html = data.map((val,index) => {
         return `<div class='card card-body suggestion' onclick='searchBySuggestions($(this))'>
@@ -366,7 +418,6 @@ generateSuggestions = (data) => {
                     <span style='color:rgba(0,0,0,0.54);'>${val.type}</span>
                 </div>`
     });
-    //console.log(html);
     html.forEach((val,index)=>{
         $('#suggestion-bar').append(val);
     });
@@ -399,7 +450,6 @@ searchBySuggestionsHome = (value) => {
 }
 
 generateSuggestionsHome = (data) => {
-    console.log(data);
     $('.suggestion').remove();
 
     var html = data.map((val,index) => {
