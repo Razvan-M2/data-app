@@ -33,6 +33,10 @@
         <option value = "y 5" >Ultimii 5 ani</option>
         <option value = "y 16" > Ultimii 16 ani</option>
     </select>
+    
+   <div id="first">
+      
+   </div>
 
     </div>
 </div>
@@ -93,4 +97,50 @@ Morbi nec mollis lectus, eget tincidunt ante. Nulla sed cursus mauris, scelerisq
         initiateData("Romania",$('#keyInput').val(),"d 7");
 
     });
+
+
+function search_kb(event){
+    clearPreviousResults();
+    event.preventDefault();
+    let search_string = encodeURIComponent(document.getElementById('keyInput').value);
+    //curl -X GET -H "Authorization: 563492ad6f917000010000011e4d94210755433ebd3c48ab924dae67" "https://api.pexels.com/v1/search?query=nature&per_page=1"
+
+    let url ='https://api.pexels.com/v1/search?query=' + search_string +'&per_page=1';
+    let req = new XMLHttpRequest();
+    req.open('get', url, true);
+    req.setRequestHeader('Authorization', '563492ad6f917000010000011e4d94210755433ebd3c48ab924dae67')
+
+    req.onload = search_results;
+    req.onerror = search_error;
+    req.send();
+}
+
+function search_error() {
+  alert('Request error from photo');
+}
+
+function search_results() {
+    let data = JSON.parse(this.responseText);
+    //console.log(JSON.stringify(data, null, 4));
+    let photo = data.photos[0].src.small;
+    //console.log(photo);
+    let result = document.createElement('div');
+    result.id = "photo";
+    result.innerHTML = '<img src="' + photo + '" class="center">';
+    result.setAttribute("style", "display: inline-block;height:340px;width:360px;vertical-align:top;");
+    document.body.insertBefore(result, document.getElementById('first').nextSibling);
+
+}
+   
+function clearPreviousResults(){
+  let results = this.document.getElementById('results');
+  if (results) {
+    results.remove();
+  }
+  let photo = this.document.getElementById('photo');
+  if (photo) {
+    photo.remove();
+  }
+}
+
 </script>
