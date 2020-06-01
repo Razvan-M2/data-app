@@ -432,12 +432,69 @@ updateCharts = (country, keyword, time) => {
 
 }
 
+
+   
+    function search_kb() {
+        clearPreviousResults();
+        //event.preventDefault();
+        let search_string = encodeURIComponent(document.getElementById('keyInput').value);
+        //curl -X GET -H "Authorization: 563492ad6f917000010000011e4d94210755433ebd3c48ab924dae67" "https://api.pexels.com/v1/search?query=nature&per_page=1"
+
+        let url = 'https://api.pexels.com/v1/search?query=' + search_string + '&per_page=1';
+        let req = new XMLHttpRequest();
+        req.open('get', url, true);
+        req.setRequestHeader('Authorization', '563492ad6f917000010000011e4d94210755433ebd3c48ab924dae67')
+
+        req.onload = search_results;
+        req.onerror = search_error;
+        req.send();
+    }
+
+    function search_error() {
+        alert('Request error from photo');
+    }
+
+    function search_results() {
+        let data = JSON.parse(this.responseText);
+        console.log(JSON.stringify(data, null, 4) + 'photttttttttoooooooooo');
+        let photo;
+        if(data.photos[0] != undefined)
+            photo = data.photos[0].src.small;
+        else photo="./pictures/not-found-data.jpg";    
+        //console.log(photo);
+
+        let result = document.createElement('div');
+        result.id = "photo";
+        //    margin-left: 30%;
+        result.innerHTML = '<img src="' + photo + '" class="center">';
+
+        result.setAttribute("style", "width:44%;padding:15px;background-color:white;margin-left: 30%;margin-bottom: 8%; border-radius:10px;");
+        document.getElementById("cerut").insertBefore(result, document.getElementById('first'));
+
+    }
+
+    function clearPreviousResults() {
+        let results = this.document.getElementById('results');
+        if (results) {
+            results.remove();
+        }
+        let photo = this.document.getElementById('photo');
+        if (photo) {
+            photo.remove();
+        }
+    }
+
 handleSearch = () => {
     var selected_country = $('#countries').val();
     var keyword = $('#keyInput').val();
     var time = $('#time').val();
-    if(selected_country.length>0 && keyword.length>0 && time.length>0)
+    if(selected_country.length>0 && keyword.length>0 && time.length>0){
         updateCharts(selected_country,keyword,time);
+        search_kb();
+    }
+  
+
+
 }
 
 searchBySuggestions = (value) => {

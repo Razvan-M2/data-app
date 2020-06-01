@@ -1,42 +1,42 @@
 <div id="panelSearch">
-<div class="card coco" style="width:90%; heigth:80%; margin-left:5%; margin-right:5%;margin-top:15%;">
+    <div id="cerut" class="card coco" style="width:90%; heigth:80%; margin-left:5%; margin-right:5%;margin-top:15%;">
 
-    {{!-- <audio src="https://www.oxfordlearnersdictionaries.com/media/english/uk_pron/s/spa/spagh/spaghetti__gb_1.mp3" controls>
+        {{!-- <audio src="https://www.oxfordlearnersdictionaries.com/media/english/uk_pron/s/spa/spagh/spaghetti__gb_1.mp3" controls>
         Your browser does not support the audio element.
     </audio> --}}
-    <label class="labels" for="keyword">Change the input here:</label>
-    <div class="input-group mb-3" style="width:100%;position:relative;" name="keyword" >
-        <div id="search-div" style="width:100%;">
-            <input id="keyInput" type="text" class="form-control search-control" placeholder="Enter a keyword" aria-label="Username" aria-describedby="basic-addon1" value={{searchedKeyword}} oninput="inputData()">
-        </div>
-        <div id="suggestion-bar">
+        <label class="labels" for="keyword">Change the input here:</label>
+        <div class="input-group mb-3" style="width:100%;position:relative;" name="keyword">
+            <div id="search-div" style="width:100%;">
+                <input id="keyInput" type="text" class="form-control search-control" placeholder="Enter a keyword"
+                    aria-label="Username" aria-describedby="basic-addon1" value={{searchedKeyword}}
+                    oninput="inputData()">
+            </div>
+            <div id="suggestion-bar">
+
+            </div>
 
         </div>
-    
-    </div>
 
 
-    <label class="labels" for="countries">Choose a country:</label>
-        <input class="form-control search-control" type="text" id="countries" list="countriesList"/>
-        <datalist   name="countries" id="countriesList" style="max-width:70%">
-        </datalist >
+        <label class="labels" for="countries">Choose a country:</label>
+        <input class="form-control search-control" type="text" id="countries" list="countriesList" />
+        <datalist name="countries" id="countriesList" style="max-width:70%">
+        </datalist>
 
-    <label class="labels" for="time">Choose an interval of time:</label>
-    <select class="form-control search-control"  style="margin-bottom:15%;"name="time" id="time">
-        {{!-- <option value = "h 1" >Ultima ora</option>
+        <label class="labels" for="time">Choose an interval of time:</label>
+        <select class="form-control search-control" style="margin-bottom:15%;" name="time" id="time">
+            {{!-- <option value = "h 1" >Ultima ora</option>
         <option value = "h 4" >Ultimele 4 ore</option> --}}
-        <option value = "d 3" >Ultimele 3 zile</option>
-        <option value = "d 7" >Ultimele 7 zile</option>
-        <option value = "d 30" >Ultimele 30 de zile</option>
-        <option value = "d 90" >Ultimele 90 de zile</option>
-        <option value = "m 12" >Ultimele 12 luni</option>    
-        <option value = "y 5" >Ultimii 5 ani</option>
-        <option value = "y 16" > Ultimii 16 ani</option>
-    </select>
-    
-   <div id="first">
-      
-   </div>
+            <option value="d 3">Ultimele 3 zile</option>
+            <option value="d 7">Ultimele 7 zile</option>
+            <option value="d 30">Ultimele 30 de zile</option>
+            <option value="d 90">Ultimele 90 de zile</option>
+            <option value="m 12">Ultimele 12 luni</option>
+            <option value="y 5">Ultimii 5 ani</option>
+            <option value="y 16"> Ultimii 16 ani</option>
+        </select>
+
+        <div id="first"></div>
 
     </div>
 </div>
@@ -47,7 +47,7 @@
 
     <div class="search-results-container canvas-chart">
 
-    {{!-- <span>
+        {{!-- <span>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean at justo varius justo egestas convallis in vitae turpis. Donec efficitur purus vitae purus volutpat congue. Donec gravida, augue vel ornare efficitur, neque nunc mattis diam, nec tincidunt massa lorem in enim. Donec eget neque ut libero egestas laoreet convallis sit amet eros. Donec sed libero porttitor, elementum est eu, efficitur mi. Suspendisse magna dolor, rhoncus vitae lacinia eget, eleifend vel est. Nullam interdum, est et auctor vulputate, nisi eros sagittis orci, quis dignissim odio sapien vitae augue. Ut dapibus urna scelerisque, euismod ipsum at, pharetra metus. Suspendisse potenti. Nulla convallis est arcu, vitae porttitor nunc mollis id. Nullam facilisis eu velit in tempus. Pellentesque posuere sapien velit, sed porta turpis tristique nec.
 
 Morbi pharetra mollis scelerisque. Sed bibendum libero eu quam convallis, vitae tincidunt metus fermentum. Maecenas eget nunc quis sem euismod condimentum. Nunc ultricies convallis placerat. Praesent lectus mauris, scelerisque ut lectus at, lobortis ultricies lectus. Donec euismod aliquam dolor, non eleifend tellus sollicitudin eu. Sed molestie sodales eleifend. Ut leo nulla, cursus at augue rhoncus, facilisis malesuada enim.
@@ -63,84 +63,90 @@ Morbi nec mollis lectus, eget tincidunt ante. Nulla sed cursus mauris, scelerisq
 
     <canvas id="chart2" class="canvas-chart"></canvas>
 
-    
+
 
 </div>
 <script>
 
-    
-    $(document).ready(()=>{
+
+    $(document).ready(() => {
         var graphs = new GraphCollection();
 
         $.ajax({
-        url: "/allCountries",
-        type:"get",
-        dataType: "json",
-        success: function(data){
-            data.forEach((item) => {
-                if(item.length>30){
-                    var text = item.substring(0,25) + "...";
-                } else {
-                    var text = item;
-                }
+            url: "/allCountries",
+            type: "get",
+            dataType: "json",
+            success: function (data) {
+                data.forEach((item) => {
+                    if (item.length > 30) {
+                        var text = item.substring(0, 25) + "...";
+                    } else {
+                        var text = item;
+                    }
                     //var obj = `<option value="${item}">${text}</option>`;
                     var obj = `<option value="${item}">`;
-                    $('#countriesList').append(obj);});
-        }
+                    $('#countriesList').append(obj);
+                });
+            }
         });
 
         //$("#countries").val("Romania");
-        $("#countries").attr("value","Romania");
+        $("#countries").attr("value", "Romania");
         $("#countries").text("Romania");
         $("#time").val("d 7");
-        
-        initiateData("Romania",$('#keyInput').val(),"d 7");
 
+        initiateData("Romania", $('#keyInput').val(), "d 7");
+        search_kb();
     });
 
+  /*
+    function search_kb() {
+        clearPreviousResults();
+        //event.preventDefault();
+        let search_string = encodeURIComponent(document.getElementById('keyInput').value);
+        //curl -X GET -H "Authorization: 563492ad6f917000010000011e4d94210755433ebd3c48ab924dae67" "https://api.pexels.com/v1/search?query=nature&per_page=1"
 
-function search_kb(event){
-    clearPreviousResults();
-    event.preventDefault();
-    let search_string = encodeURIComponent(document.getElementById('keyInput').value);
-    //curl -X GET -H "Authorization: 563492ad6f917000010000011e4d94210755433ebd3c48ab924dae67" "https://api.pexels.com/v1/search?query=nature&per_page=1"
+        let url = 'https://api.pexels.com/v1/search?query=' + search_string + '&per_page=1';
+        let req = new XMLHttpRequest();
+        req.open('get', url, true);
+        req.setRequestHeader('Authorization', '563492ad6f917000010000011e4d94210755433ebd3c48ab924dae67')
 
-    let url ='https://api.pexels.com/v1/search?query=' + search_string +'&per_page=1';
-    let req = new XMLHttpRequest();
-    req.open('get', url, true);
-    req.setRequestHeader('Authorization', '563492ad6f917000010000011e4d94210755433ebd3c48ab924dae67')
+        req.onload = search_results;
+        req.onerror = search_error;
+        req.send();
+    }
 
-    req.onload = search_results;
-    req.onerror = search_error;
-    req.send();
-}
+    function search_error() {
+        alert('Request error from photo');
+    }
 
-function search_error() {
-  alert('Request error from photo');
-}
+    function search_results() {
+        let data = JSON.parse(this.responseText);
+        console.log(JSON.stringify(data, null, 4) + 'photttttttttoooooooooo');
+        let photo = data.photos[0].src.small;
+        //console.log(photo);
+        let result = document.createElement('div');
+        result.id = "photo";
+        //    margin-left: 30%;
+        result.innerHTML = '<img src="' + photo + '" class="center">';
+        //result.innerHTML = '<img src="' + photo + '" class="center">';
+        result.setAttribute("style", "margin-left: 30%;margin-bottom: 5%; ");
+        document.getElementById("cerut").insertBefore(result, document.getElementById('first'));
+        //document.childNodes[0].insertBefore(result, document.getElementById('first'));
+        //document.body.insertBefore(result, document.getElementById('first'));
 
-function search_results() {
-    let data = JSON.parse(this.responseText);
-    //console.log(JSON.stringify(data, null, 4));
-    let photo = data.photos[0].src.small;
-    //console.log(photo);
-    let result = document.createElement('div');
-    result.id = "photo";
-    result.innerHTML = '<img src="' + photo + '" class="center">';
-    result.setAttribute("style", "display: inline-block;height:340px;width:360px;vertical-align:top;");
-    document.body.insertBefore(result, document.getElementById('first').nextSibling);
+    }
 
-}
-   
-function clearPreviousResults(){
-  let results = this.document.getElementById('results');
-  if (results) {
-    results.remove();
-  }
-  let photo = this.document.getElementById('photo');
-  if (photo) {
-    photo.remove();
-  }
-}
+    function clearPreviousResults() {
+        let results = this.document.getElementById('results');
+        if (results) {
+            results.remove();
+        }
+        let photo = this.document.getElementById('photo');
+        if (photo) {
+            photo.remove();
+        }
+    }
+    */
 
 </script>
