@@ -415,17 +415,6 @@ updateCharts = (country, keyword, time) => {
     //     }
     // });
     /*****  Getting dictionary data  *****/
-<<<<<<< HEAD
-    $.ajax({
-        url: "/translate/"+keyword,
-        type:"GET",
-        dataType: "JSON",
-        success: function(data){
-            console.log(data);
-            insertDictionaryData(data);
-        }
-    });
-=======
         $.ajax({
             url: "/translate/"+keyword,
             type:"GET",
@@ -441,7 +430,6 @@ updateCharts = (country, keyword, time) => {
             timeout: 5000
         });
 
->>>>>>> aef095cd8074cdf742591d58e47ce04ba6564d96
 }
 
 handleSearch = () => {
