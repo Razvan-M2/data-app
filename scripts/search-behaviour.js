@@ -314,7 +314,6 @@ initiateData = (country,keyword,time) => {
 
 updateCharts = (country, keyword, time) => {
     /*****  FOR ITRENDING PER STATE  *****/
-    //console.log(keyword);
 
     $.ajax({
         type: 'GET',
@@ -417,14 +416,12 @@ updateCharts = (country, keyword, time) => {
             type:"GET",
             dataType: "JSON",
             success: function(data){
-                console.log(data);
                 insertDictionaryData(data);
             },
             error: function(){
                 var container = document.getElementsByClassName('search-results-container');
                 var htmlEmptyImage = `<img id="emptyDictionaryImg" src="./pictures/empty_state_illustration-32.svg" width="500" height="600">`
-                container[0].innerHTML = htmlEmptyImage;
-                //console.log(htmlEmptyImage);                
+                container[0].innerHTML = htmlEmptyImage;             
             },
             timeout: 5000
         });
