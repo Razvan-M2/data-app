@@ -1,4 +1,5 @@
 const express = require('express');
+const colors = require('colors');
 const app = express();
 const googleAPI = require('./handle_backend/utils-api/googleAPI');
 const utilityAPI = require('./handle_backend/utilityAPI'); 
@@ -15,6 +16,7 @@ app.use('/bootstrap-4.4.1-dist',express.static('bootstrap-4.4.1-dist'));
 app.use('/scripts',express.static('scripts'));
 app.use('/style',express.static('style'));
 app.use('/charts_js',express.static('charts_js'));
+app.use('/pictures',express.static('pictures'));
 
 app.engine('hbs', exphbs({
     extname: '.hbs'
@@ -94,7 +96,8 @@ app.use('/queries/:country/:keyword/:startTime/:endTime', (req,res) => {
 app.use('/translate/:keyword',(req,res) => {
     //console.log(req.params.keyword);
     var keyword = req.params.keyword;
-    
+
+    console.log(`${req.params.keyword}`.red);
     utilityAPI.dictionaryAPI.getTranslation(keyword,res);
     //res.send('Nothing here');
 });

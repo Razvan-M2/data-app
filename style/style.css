@@ -113,11 +113,21 @@ option{
 
 .definition-word-category{
     padding-bottom:5px;
-    display: block;
+    display: inline-block;
     font-weight:bold;
     text-decoration: underline;
 }
-
+.definition-word-spelling{
+    padding-left:10px;
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #333333;
+}
+.labels{
+    margin-left:10%;
+    margin-top:15%;
+}
 /***********************/
 /**********ID***********/
 /***********************/
@@ -183,6 +193,22 @@ option{
     margin-bottom:10px;
 }
 
+#title-dictionary-audioFile{
+    display:inline-block;
+    padding-top:5px;
+    padding-left:10px;
+}
+#title-dictionary-audioFile:hover{
+    cursor:pointer;
+}
+
+#emptyDictionaryImg{
+    width: 60%;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 7%;
+    height: 80%;
+}
 /* 
 #keywordSubmit{
     width:100%;

@@ -15,52 +15,44 @@ module.exports = {
         
         let definitions = {},pronunciations = {},examples = {}, categories;
         
+        for(var i = 0; i<keyword.length;i++){
+            if(keyword[i]==" "){
+                keyword[i]=" ";
+            }
+        }
 
         var define = dictionary.definitions(keyword);
         var pronounce = dictionary.pronunciations(keyword);
         var exemplify = dictionary.examples(keyword);
 
-        define.then((def) => {
-            definitions = def;
-            pronounce.then((pron) => {
-                pronunciations = pron;
-                exemplify.then((exem)=>{
-                    examples = exem;
-                    response.send({ keyword:keyword,
-                                    def:definitions.results[0].lexicalEntries,
-                                    pronon:pronunciations.results[0].lexicalEntries,
-                                    exem:examples.results[0].lexicalEntries});
-                },(err)=>{
-                    try{
+        try{
+            define.then((def) => {
+                definitions = def;
+                pronounce.then((pron) => {
+                    pronunciations = pron;
+                    exemplify.then((exem)=>{
+                        examples = exem;
+                        response.send({ keyword:keyword,
+                                        def:definitions.results[0].lexicalEntries,
+                                        pronon:pronunciations.results[0].lexicalEntries,
+                                        exem:examples.results[0].lexicalEntries});
+                    },(err)=>{
                         if(err)
-                            throw err;
-                    }
-                    catch(err){
-                        console.log("Error in finding the word examples");
-                        console.log(err);
-                    }
+                            console.log("Error in finding the word examples!");
+                    })
+                },(err) => {
+                    if(err)
+                        console.log("Error in finding the word pronunciations!");
                 })
             },(err) => {
-                try{
-                    if(err)
-                        throw err;
-                }
-                catch(err){
-                    console.log("Error in finding the word pronunciations");
-                    console.log(err);
-                }
-            })
-        },(err) => {
-            try{
                 if(err)
-                    throw err;
-            }
-            catch(err){
-                console.log("Error in defining the word!");
-                console.log(err);
-            }
-            
-        });
+                    console.log("Error in defining the word!");
+            });
+        } 
+        catch(err){
+            console.log("Eror in promises!");
+        }
+
     }
 
 }
