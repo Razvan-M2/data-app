@@ -227,11 +227,13 @@ insertDictionaryData = (data) => {
     var container = document.getElementsByClassName('search-results-container');
     var htmlTitle = `   <div id="title-dictionary">
                             <span id="title-dictionary-content" >${data.keyword.charAt(0).toUpperCase() + data.keyword.slice(1)}</span>
-                        </div>`;
+                            <audio src=${data.pronon[0].entries[0].pronunciations[1].audioFile} controls> Your browser does not support the audio element. </audio>
+                            </div>`;
     var definitions = [];
     var examples = [];
     var pronunciations = [];
-
+    console;console.log(data);
+    
     if(data.def[0].entries!=null){
         data.def.forEach((primaryItem,primaryIndex)=>{
             definitions[primaryIndex]= {    lexicalCategory:primaryItem.lexicalCategory.text,
@@ -257,6 +259,8 @@ insertDictionaryData = (data) => {
                                 audioFile:primaryItem.entries[0].pronunciations[1].audioFile})
     });
     var htmlBody = createDictionaryContainerContent(definitions,examples,pronunciations);
+    //htmlBody.append=`<audio src=${pronunciations[1].audioFile} controls> Your browser does not support the audio element. </audio>`;
+
     container[0].innerHTML = htmlTitle + htmlBody; 
 }
 
@@ -268,6 +272,7 @@ generateDictionaryTranslation = (keyword) => {
         dataType: "JSON",
         success: function(data){
             //  Added the dictionary API
+
             insertDictionaryData(data);
         }
     });
@@ -279,7 +284,7 @@ initiateData = (country,keyword,time) => {
     generateInterestOverTimeChart(country,keyword,time);
     generateRelatedTopics(country,keyword,time);
     generateRelatedQueries(country,keyword,time);
-    //generateDictionaryTranslation(keyword);
+    generateDictionaryTranslation(keyword);
 }
 
 updateCharts = (country, keyword, time) => {
@@ -382,15 +387,15 @@ updateCharts = (country, keyword, time) => {
         }
     });
     /*****  Getting dictionary data  *****/
-    // $.ajax({
-    //     url: "/translate/"+keyword,
-    //     type:"GET",
-    //     dataType: "JSON",
-    //     success: function(data){
-    //         console.log(data);
-    //         insertDictionaryData(data);
-    //     }
-    // });
+    $.ajax({
+        url: "/translate/"+keyword,
+        type:"GET",
+        dataType: "JSON",
+        success: function(data){
+            console.log(data);
+            insertDictionaryData(data);
+        }
+    });
 }
 
 handleSearch = () => {
