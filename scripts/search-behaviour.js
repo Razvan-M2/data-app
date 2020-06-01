@@ -233,20 +233,16 @@ createDictionaryContainerContent = (definitions,examples,pronunciations) => {
 
 playAudioFileExample = (httpLink) => {
     var audioFile = new Audio(httpLink);
+    console.log("here");
     audioFile.onplay = () => {
         $('#audioIcon').removeClass('fas fa-play-circle');
         $('#audioIcon').addClass('far fa-stop-circle');     
-    }
+    };
     audioFile.onended = () => {
         $('#audioIcon').removeClass('far fa-stop-circle');
         $('#audioIcon').addClass('fas fa-play-circle');        
-    }
+    };
     audioFile.play();
-    // $('#audioIcon').removeClass('fas fa-play-circle');
-    // $('#audioIcon').addClass('far fa-stop-circle');
-
-    // $('#audioIcon').removeClass('far fa-stop-circle');
-    // $('#audioIcon').addClass('fas fa-play-circle');
 }
 
 insertDictionaryData = (data) => {
@@ -254,7 +250,7 @@ insertDictionaryData = (data) => {
     var container = document.getElementsByClassName('search-results-container');
     var htmlTitle = `   <div id="title-dictionary">
                             <span id="title-dictionary-content" >${data.keyword.charAt(0).toUpperCase() + data.keyword.slice(1)}</span>
-                            <div id="title-dictionary-audioFile" style='font-size:20px' onclick='playAudioFileExample(${data.pronon[0].entries[0].pronunciations[1].audioFile})'><i id="audioIcon" class='fas fa-play-circle'></i></div>
+                            <div id="title-dictionary-audioFile" style="font-size:20px;" onclick="playAudioFileExample('${data.pronon[0].entries[0].pronunciations[1].audioFile}')"><i id="audioIcon" class="fas fa-play-circle"></i></div>
                         </div>`;
     var definitions = [];
     var examples = [];
@@ -396,25 +392,25 @@ updateCharts = (country, keyword, time) => {
         },
     });
     /*****  Getting RELATED QUERIES  *****/
-    $.ajax({
-        url: "/queries/"+country+"/"+keyword+"/"+getMilliSecondsPrototype(time)+"/"+0,
-        type:"GET",
-        dataType: "JSON",
-        success: function(data){
-            //console.log("These are RELATED QUERIES UPDATED:");
-            //console.log(data.default.rankedList);
-        }
-    });
+    // $.ajax({
+    //     url: "/queries/"+country+"/"+keyword+"/"+getMilliSecondsPrototype(time)+"/"+0,
+    //     type:"GET",
+    //     dataType: "JSON",
+    //     success: function(data){
+    //         //console.log("These are RELATED QUERIES UPDATED:");
+    //         //console.log(data.default.rankedList);
+    //     }
+    // });
     /*****  Getting RELATED TOPICS  *****/
-    $.ajax({
-        url: "/topics/"+country+"/"+keyword+"/"+getMilliSecondsPrototype(time)+"/"+0,
-        type:"GET",
-        dataType: "JSON",
-        success: function(data){
-            //console.log("These are RELATED TOPICS UPDATED:");
-            //console.log(data.default.rankedList);
-        }
-    });
+    // $.ajax({
+    //     url: "/topics/"+country+"/"+keyword+"/"+getMilliSecondsPrototype(time)+"/"+0,
+    //     type:"GET",
+    //     dataType: "JSON",
+    //     success: function(data){
+    //         //console.log("These are RELATED TOPICS UPDATED:");
+    //         //console.log(data.default.rankedList);
+    //     }
+    // });
     /*****  Getting dictionary data  *****/
         $.ajax({
             url: "/translate/"+keyword,
