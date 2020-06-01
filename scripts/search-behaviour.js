@@ -255,7 +255,8 @@ insertDictionaryData = (data) => {
     var definitions = [];
     var examples = [];
     var pronunciations = [];
-
+    console;console.log(data);
+    
     if(data.def[0].entries!=null){
         data.def.forEach((primaryItem,primaryIndex)=>{
             definitions[primaryIndex]= {    lexicalCategory:primaryItem.lexicalCategory.text,
@@ -283,6 +284,8 @@ insertDictionaryData = (data) => {
                                 audioFile:primaryItem.entries[0].pronunciations[1].audioFile})
     });
     var htmlBody = createDictionaryContainerContent(definitions,examples,pronunciations);
+    //htmlBody.append=`<audio src=${pronunciations[1].audioFile} controls> Your browser does not support the audio element. </audio>`;
+
     container[0].innerHTML = htmlTitle + htmlBody; 
 }
 
@@ -294,6 +297,7 @@ generateDictionaryTranslation = (keyword) => {
         dataType: "JSON",
         success: function(data){
             //  Added the dictionary API
+
             insertDictionaryData(data);
         },
         timeout: 1000,
@@ -411,6 +415,17 @@ updateCharts = (country, keyword, time) => {
     //     }
     // });
     /*****  Getting dictionary data  *****/
+<<<<<<< HEAD
+    $.ajax({
+        url: "/translate/"+keyword,
+        type:"GET",
+        dataType: "JSON",
+        success: function(data){
+            console.log(data);
+            insertDictionaryData(data);
+        }
+    });
+=======
         $.ajax({
             url: "/translate/"+keyword,
             type:"GET",
@@ -426,6 +441,7 @@ updateCharts = (country, keyword, time) => {
             timeout: 5000
         });
 
+>>>>>>> aef095cd8074cdf742591d58e47ce04ba6564d96
 }
 
 handleSearch = () => {
