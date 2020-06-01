@@ -15,16 +15,26 @@ module.exports = {
         })
 
     },
-//iuliabapi
+
     getAutocomplete : function(text,res){
         
         googleTrends.autoComplete({keyword: text},function(err,result){
-            if(err)
-                throw err;
-            else{
-                var obj = JSON.parse(result)
-                res.send(beautify(obj,null,2,100));
-            };
+            try{
+                if(err)
+                   throw err;
+            //else{
+                    try{
+                        var obj = JSON.parse(result)
+                        res.send(beautify(obj,null,2,100));
+                    }
+                    catch(errParsing){
+                        console.log(errParsing);
+                    }
+                }
+            //}
+            catch(err){
+                console.log(err);
+            }
         });
 
     },

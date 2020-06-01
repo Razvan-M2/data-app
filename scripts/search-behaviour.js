@@ -197,36 +197,64 @@ generateRelatedQueries = (country,keyword,time) => {
 }
 
 createDictionaryContainerContent = (definitions,examples,pronunciations) => {
-
+    // console.log(definitions);
+    // console.log(examples);
+    // console.log(pronunciations);
     var builder = "";
     var count;
-    for(var primaryIndex = 0;   primaryIndex<definitions.length && 
-                                primaryIndex<examples.length &&
-                                primaryIndex<pronunciations.length; primaryIndex++){
+    for(var primaryIndex = 0;   primaryIndex<definitions.length; primaryIndex++){
                 builder+=`<div class="definition-word-body">
                                 <span class="definition-word-category">${   definitions[primaryIndex].lexicalCategory.charAt(0).toUpperCase()+
-                                                                            definitions[primaryIndex].lexicalCategory.slice(1)}</span>`;
+                                                                            definitions[primaryIndex].lexicalCategory.slice(1)}</span>
+                                <span class="definition-word-spelling">/${   pronunciations[0].phoneticsSpelling.charAt(0).toUpperCase()+
+                                    pronunciations[0].phoneticsSpelling.slice(1)}/</span>`;
                 count = 1;
-        for(var contentIndex = 0;   contentIndex<definitions[primaryIndex].content.length &&
-                                    contentIndex<examples[primaryIndex].content.length; contentIndex++){
-                    if(definitions[primaryIndex].content[contentIndex]!=null && examples[primaryIndex].content[contentIndex]){    
-
-                builder += `<span class="definition-word-definition" >${count})${definitions[primaryIndex].content[contentIndex].charAt(0).toUpperCase()
-                                                                        +definitions[primaryIndex].content[contentIndex].slice(1)}</span>
-                            <i><span class="definition-word-example">"${   examples[primaryIndex].content[contentIndex].charAt(0).toUpperCase()+
-                                                                        examples[primaryIndex].content[contentIndex].slice(1)}"</span></i>`;
-                            count++;
+        for(var contentIndex = 0;   contentIndex<definitions[primaryIndex].content.length; contentIndex++){
+                if(definitions[primaryIndex]!=null && examples[primaryIndex]!=null ){
+                    if(definitions[primaryIndex].content[contentIndex]!=null && examples[primaryIndex].content[contentIndex]){
+                        count++;
                     }
+                }
+                if(definitions[primaryIndex]!=null)
+                    if(definitions[primaryIndex].content[contentIndex]!=null ){    
+                        builder += `<span class="definition-word-definition" >${count})${definitions[primaryIndex].content[contentIndex].charAt(0).toUpperCase()
+                                                                        +definitions[primaryIndex].content[contentIndex].slice(1)}</span>`;}
+                if(examples[primaryIndex]!=null)
+                    if(examples[primaryIndex].content[contentIndex]){                                                    
+                        builder +=  `<i><span class="definition-word-example">"${examples[primaryIndex].content[contentIndex].charAt(0).toUpperCase()+
+                                                                        examples[primaryIndex].content[contentIndex].slice(1)}"</span></i>`;}
         }
             builder+=`</div>`
     }
     return builder;
 }
 
+
+
+playAudioFileExample = (httpLink) => {
+    var audioFile = new Audio(httpLink);
+    audioFile.onplay = () => {
+        $('#audioIcon').removeClass('fas fa-play-circle');
+        $('#audioIcon').addClass('far fa-stop-circle');     
+    }
+    audioFile.onended = () => {
+        $('#audioIcon').removeClass('far fa-stop-circle');
+        $('#audioIcon').addClass('fas fa-play-circle');        
+    }
+    audioFile.play();
+    // $('#audioIcon').removeClass('fas fa-play-circle');
+    // $('#audioIcon').addClass('far fa-stop-circle');
+
+    // $('#audioIcon').removeClass('far fa-stop-circle');
+    // $('#audioIcon').addClass('fas fa-play-circle');
+}
+
 insertDictionaryData = (data) => {
+    console.log(data);
     var container = document.getElementsByClassName('search-results-container');
     var htmlTitle = `   <div id="title-dictionary">
                             <span id="title-dictionary-content" >${data.keyword.charAt(0).toUpperCase() + data.keyword.slice(1)}</span>
+                            <div id="title-dictionary-audioFile" style='font-size:20px' onclick='playAudioFileExample(${data.pronon[0].entries[0].pronunciations[1].audioFile})'><i id="audioIcon" class='fas fa-play-circle'></i></div>
                         </div>`;
     var definitions = [];
     var examples = [];
@@ -236,10 +264,11 @@ insertDictionaryData = (data) => {
         data.def.forEach((primaryItem,primaryIndex)=>{
             definitions[primaryIndex]= {    lexicalCategory:primaryItem.lexicalCategory.text,
                                             content:[] };
-            primaryItem.entries[0].senses.forEach((secondaryItem,secondaryIndex)=>{
-                if(secondaryItem.definitions!=null)
-                    definitions[primaryIndex].content.push(secondaryItem.definitions[0]);
-            })
+            if(primaryItem.entries!=null)
+                primaryItem.entries[0].senses.forEach((secondaryItem,secondaryIndex)=>{
+                    if(secondaryItem.definitions!=null)
+                        definitions[primaryIndex].content.push(secondaryItem.definitions[0]);
+                })
         });
     }
     
@@ -247,9 +276,10 @@ insertDictionaryData = (data) => {
         data.exem.forEach((primaryItem,primaryIndex)=>{
             examples[primaryIndex]= {   lexicalCategory:primaryItem.lexicalCategory.text,
                                         content:[]  };
-            primaryItem.entries[0].senses.forEach((secondaryItem,secondaryIndex)=>{
-                if(secondaryItem.examples!=null)
-                    examples[primaryIndex].content.push(secondaryItem.examples[0].text)})
+            if(primaryItem.entries!=null)            
+                primaryItem.entries[0].senses.forEach((secondaryItem,secondaryIndex)=>{
+                    if(secondaryItem.examples!=null)
+                        examples[primaryIndex].content.push(secondaryItem.examples[0].text)})
         });
     }
     data.pronon.forEach((primaryItem,index)=>{
@@ -269,6 +299,10 @@ generateDictionaryTranslation = (keyword) => {
         success: function(data){
             //  Added the dictionary API
             insertDictionaryData(data);
+        },
+        timeout: 1000,
+        error: function(errorMessage){
+            console.log(errorMessage);
         }
     });
 }
@@ -279,7 +313,7 @@ initiateData = (country,keyword,time) => {
     generateInterestOverTimeChart(country,keyword,time);
     generateRelatedTopics(country,keyword,time);
     generateRelatedQueries(country,keyword,time);
-    //generateDictionaryTranslation(keyword);
+    generateDictionaryTranslation(keyword);
 }
 
 updateCharts = (country, keyword, time) => {
@@ -382,15 +416,23 @@ updateCharts = (country, keyword, time) => {
         }
     });
     /*****  Getting dictionary data  *****/
-    // $.ajax({
-    //     url: "/translate/"+keyword,
-    //     type:"GET",
-    //     dataType: "JSON",
-    //     success: function(data){
-    //         console.log(data);
-    //         insertDictionaryData(data);
-    //     }
-    // });
+        $.ajax({
+            url: "/translate/"+keyword,
+            type:"GET",
+            dataType: "JSON",
+            success: function(data){
+                console.log(data);
+                insertDictionaryData(data);
+            },
+            error: function(){
+                var container = document.getElementsByClassName('search-results-container');
+                var htmlEmptyImage = `<img id="emptyDictionaryImg" src="./pictures/empty_state_illustration-32.svg" width="500" height="600">`
+                container[0].innerHTML = htmlEmptyImage;
+                //console.log(htmlEmptyImage);                
+            },
+            timeout: 5000
+        });
+
 }
 
 handleSearch = () => {
@@ -486,6 +528,7 @@ $(document).ready(()=>{
 
     $("#keyInput").on('keyup', function (e) {
         if (e.keyCode === 13) {
+            $('.suggestion').remove();
             handleSearch();
         }
     });
@@ -515,4 +558,6 @@ $(document).ready(()=>{
         //$('#keyInput').attr("style","border-bottom-right-radius:0px;border-bottom-left-radius:0px;");
         inputDataHome();
     });
+
+
 });

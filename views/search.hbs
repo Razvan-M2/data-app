@@ -4,8 +4,8 @@
     <audio src="https://www.oxfordlearnersdictionaries.com/media/english/uk_pron/s/spa/spagh/spaghetti__gb_1.mp3" controls>
         Your browser does not support the audio element.
     </audio>
-
-    <div class="input-group mb-3" style="width:100%;margin-top:75px;position:relative;">
+    <label class="labels" for="keyword">Change the input here:</label>
+    <div class="input-group mb-3" style="width:100%;position:relative;" name="keyword" >
         <div id="search-div" style="width:100%;">
             <input id="keyInput" type="text" class="form-control search-control" placeholder="Enter a keyword" aria-label="Username" aria-describedby="basic-addon1" value={{searchedKeyword}} oninput="inputData()">
         </div>
@@ -16,12 +16,12 @@
     </div>
 
 
-    <label for="countries" style="margin-top:15%;margin-left:15%;">Choose a country:</label>
+    <label class="labels" for="countries">Choose a country:</label>
         <input class="form-control search-control" type="text" id="countries" list="countriesList"/>
         <datalist   name="countries" id="countriesList" style="max-width:70%">
         </datalist >
 
-    <label for="time" style="margin-top:15%; margin-left:15%;">Choose an interval of time:</label>
+    <label class="labels" for="time">Choose an interval of time:</label>
     <select class="form-control search-control"  style="margin-bottom:15%;"name="time" id="time">
         {{!-- <option value = "h 1" >Ultima ora</option>
         <option value = "h 4" >Ultimele 4 ore</option> --}}
