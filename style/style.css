@@ -31,7 +31,7 @@ option{
 
 .coco
 {
-    background-color: rgb(240,240,240);
+    background-color:rgba(150, 150, 150, 0.52);
 }
 
 .btn-outline-success {
@@ -162,6 +162,7 @@ option{
     width:30%; 
     height:100%;
     height:auto;
+    background-color: rgba(98, 98, 98, 0.16);
 }
 
 #panelData{
@@ -171,7 +172,7 @@ option{
     margin-right:0px;
     width:70%;
     height: auto;
-    background-color: rgb(240,240,240);
+    background-color: rgba(98, 98, 98, 0.16);
      
 }
 
