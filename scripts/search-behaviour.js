@@ -455,6 +455,7 @@ updateCharts = (country, keyword, time) => {
     }
 
     function search_results() {
+        $('.center').remove();
         let data = JSON.parse(this.responseText);
         console.log(JSON.stringify(data, null, 4) + 'photttttttttoooooooooo');
         let photo;
@@ -466,9 +467,9 @@ updateCharts = (country, keyword, time) => {
         let result = document.createElement('div');
         result.id = "photo";
         //    margin-left: 30%;
-        result.innerHTML = '<img src="' + photo + '" class="center">';
+        result.innerHTML = '<img src="' + photo + '" class="center" style="width: 100%;max-height:120px">';
 
-        result.setAttribute("style", "width:44%;padding:15px;background-color:white;margin-left: 30%;margin-bottom: 8%; border-radius:10px;");
+        result.setAttribute("style", "width:44%;padding:15px;background-color:white;margin-left: 30%;margin-bottom: 8%; border-radius:10px; max-height:150px;");
         document.getElementById("cerut").insertBefore(result, document.getElementById('first'));
 
     }
