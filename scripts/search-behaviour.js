@@ -55,40 +55,40 @@ getMilliSecondsPrototype = (time) => {
     }
 }
 
-getMilliSeconds = (time) => {
+// getMilliSeconds = (time) => {
 
-    switch(time){
-        case '1 ora':
-            return 1000*60*60;
-            break;
-        case '4 ore':
-            return 1000*60*60*4;
-            break;
-        case '1 zi':
-            return 1000*60*60*24;
-            break;
-        case '2 zile':
-            return 
-        case '7 zile':
-            return 1000*60*60*24*7;
-            break;
-        case '30 zile':
-            return 1000*60*60*24*30;
-            break;
-        case '90 zile':
-            return 1000*60*60*24*90;
-            break;
-        case '12 luni':
-            return 1000*60*60*24*30*12;
-            break;
-        case '5 ani':
-            return 1000*60*60*24*30*12*5;
-            break;
-        default:
-            return 1000*60*60*24*7;
-            break;
-    }
-}
+//     switch(time){
+//         case '1 ora':
+//             return 1000*60*60;
+//             break;
+//         case '4 ore':
+//             return 1000*60*60*4;
+//             break;
+//         case '1 zi':
+//             return 1000*60*60*24;
+//             break;
+//         case '2 zile':
+//             return 
+//         case '7 zile':
+//             return 1000*60*60*24*7;
+//             break;
+//         case '30 zile':
+//             return 1000*60*60*24*30;
+//             break;
+//         case '90 zile':
+//             return 1000*60*60*24*90;
+//             break;
+//         case '12 luni':
+//             return 1000*60*60*24*30*12;
+//             break;
+//         case '5 ani':
+//             return 1000*60*60*24*30*12*5;
+//             break;
+//         default:
+//             return 1000*60*60*24*7;
+//             break;
+//     }
+// }
 
 generateTrendingChart = (country,keyword,time) => {
     $.ajax({
@@ -300,7 +300,7 @@ generateDictionaryTranslation = (keyword) => {
 
             insertDictionaryData(data);
         },
-        timeout: 1000,
+        timeout: 5000,
         error: function(errorMessage){
             console.log(errorMessage);
         }
@@ -468,7 +468,7 @@ updateCharts = (country, keyword, time) => {
         //    margin-left: 30%;
         result.innerHTML = '<img src="' + photo + '" class="center">';
 
-        result.setAttribute("style", "width:44%;padding:15px;background-color:white;margin-left: 30%;margin-bottom: 8%; border-radius:10px;");
+        result.setAttribute("style", "width:44%;padding:15px;background-color:white;margin-left:auto;margin-right:auto;overflow: hidden;margin-bottom: 8%; border-radius:10px;");
         document.getElementById("cerut").insertBefore(result, document.getElementById('first'));
 
     }
@@ -493,8 +493,6 @@ handleSearch = () => {
         search_kb();
     }
   
-
-
 }
 
 searchBySuggestions = (value) => {
